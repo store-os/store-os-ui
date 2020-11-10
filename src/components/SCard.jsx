@@ -43,7 +43,7 @@ const SCard = ({
       <Meta title={title} description={shortDescription} />
       <Details>{details}</Details>
       <Actions details={details}>
-        <p>{price}</p>
+        <p>{price}€</p>
         {hasStock && (
           <Button type="primary" shape="round" size="middle">
             Add to cart
@@ -96,14 +96,14 @@ const Actions = styled.div`
   }
 `;
 
-/* SCard.propTypes = {
-    title: PropTypes.string,
-    description: PropTypes.string,
-    price: PropTypes.integer,
-    brand: PropTypes.string,
-    discount: PropTypes.integer,
-    hoverable: PropTypes.bool,
-    cover: PropTypes.string
-} */
+SCard.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  price: PropTypes.number,
+  brand: PropTypes.string,
+  discount: PropTypes.number,
+  hoverable: PropTypes.bool,
+  cover: PropTypes.string
+}
 
 export default SCard;

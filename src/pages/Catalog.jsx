@@ -7,7 +7,7 @@ const Catalog = () => {
       title="Zapatillas casual de hombre React Element 55 Nike"
       brand="Nike"
       hoverable={true}
-      price="32€"
+      price={32}
       cover={cardPreview}
       hasStock={true}
       details='Free shipping or pick up'
