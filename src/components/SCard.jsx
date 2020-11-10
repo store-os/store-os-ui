@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { Button, Card } from "antd";
-
 import PropTypes from "prop-types";
+import {
+  Link
+} from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -25,32 +27,35 @@ const SCard = ({
   discount,
   hoverable = false,
   cover,
-  hasStock,
+  available,
   details = "",
+  productId = ""
 }) => {
   return (
-    <MainCard
-      price={price}
-      brand={brand}
-      discount={discount}
-      hoverable
-      cover={<img alt="example" src={cover} />}
-      style={{ width: 260, minHeight: 360 }}
-      headStyle={cardHeaderStyles}
-      bodyStyle={cardContentStyles}
-    >
-      <Brand>{brand}</Brand>
-      <Meta title={title} description={shortDescription} />
-      <Details>{details}</Details>
-      <Actions details={details}>
-        <p>{price}€</p>
-        {hasStock && (
-          <Button type="primary" shape="round" size="middle">
-            Add to cart
-          </Button>
-        )}
-      </Actions>
-    </MainCard>
+    <Link to={`product/${productId}`}>
+      <MainCard
+        price={price}
+        brand={brand}
+        discount={discount}
+        hoverable
+        cover={<img alt="example" src={cover} />}
+        style={{ width: 260, minHeight: 360 }}
+        headStyle={cardHeaderStyles}
+        bodyStyle={cardContentStyles}
+      >
+        <Brand>{brand}</Brand>
+        <Meta title={title} description={shortDescription} />
+        <Details>{details}</Details>
+        <Actions details={details}>
+          <p>{price}€</p>
+          {available && (
+            <Button type="primary" shape="round" size="middle">
+              Add to cart
+            </Button>
+          )}
+        </Actions>
+      </MainCard>
+    </Link>
   );
 };
 

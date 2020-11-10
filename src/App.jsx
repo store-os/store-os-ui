@@ -4,13 +4,11 @@ import Catalog from "./pages/Catalog.jsx";
 import Blog from "./pages/Blog.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
+import Product from "./pages/Product.jsx";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Typography } from "antd";
 import { Layout } from "antd";
 
-const { Header, Footer, Sider, Content } = Layout;
-
-const { Title } = Typography;
+const { Header, Footer } = Layout;
 
 function App() {
   return (
@@ -30,6 +28,7 @@ function App() {
             <Route exact path="/blog" component={Blog} />
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
+            <Route exact path="/product/:productId" component={Product} />
           </Switch>
           <Footer></Footer>
         </Layout>

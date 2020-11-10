@@ -1,0 +1,30 @@
+import {
+  useParams
+} from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Product = () => {
+  let { productId } = useParams();
+  const [data, setData] = useState({ });
+  useEffect(async () => {
+    const fetchData = async () => {
+      const result = await axios(
+        `http://localhost:8080/api/v1/products/${productId}`,
+      );
+      setData(result.data);
+    };
+
+    fetchData();
+  }, []);
+  return (
+    <React.Fragment>
+      <p>Product: {data && data.id}</p>
+      {data.images && data.images.map(image => (
+        <img src={image}></img>
+      ))}
+    </React.Fragment>
+  );
+};
+
+export default Product;
