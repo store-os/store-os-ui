@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Button, Card } from "antd";
 import PropTypes from "prop-types";
+import React, { useState } from 'react';
 import {
   Link
 } from "react-router-dom";
@@ -31,6 +32,9 @@ const SCard = ({
   details = "",
   productId = ""
 }) => {
+
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <Link to={`product/${productId}`}>
       <MainCard
@@ -38,8 +42,9 @@ const SCard = ({
         brand={brand}
         discount={discount}
         hoverable
-        cover={<img alt="example" src={cover} />}
-        style={{ width: 260, minHeight: 360 }}
+        cover={<Thumbnail alt="example" src={isHovered && cover.length > 1 ? cover[1] : cover[0]} />}
+        onMouseEnter={() => setIsHovered(!isHovered)}
+        onMouseLeave={() => setIsHovered(!isHovered)}
         headStyle={cardHeaderStyles}
         bodyStyle={cardContentStyles}
       >
@@ -101,6 +106,11 @@ const Actions = styled.div`
   }
 `;
 
+const Thumbnail = styled.img`
+  height: 260px;
+  object-fit: cover;
+`
+
 SCard.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
@@ -108,7 +118,7 @@ SCard.propTypes = {
   brand: PropTypes.string,
   discount: PropTypes.number,
   hoverable: PropTypes.bool,
-  cover: PropTypes.string
+  cover: PropTypes.array
 }
 
 export default SCard;
