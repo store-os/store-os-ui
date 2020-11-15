@@ -10,7 +10,7 @@ const Product = () => {
   useEffect(async () => {
     const fetchData = async () => {
       const result = await axios(
-        `http://localhost:8080/api/v1/products/${productId}`,
+        `${process.env.REACT_APP_PRODUCTS_URL}/${productId}`,
       );
       setData(result.data);
     };

@@ -12,7 +12,7 @@ const Catalog = () => {
   useEffect(async () => {
     const fetchData = async () => {
       const result = await axios(
-        'http://localhost:8080/api/v1/products',
+        process.env.REACT_APP_PRODUCTS_URL,
       );
 
       setData(result.data);
