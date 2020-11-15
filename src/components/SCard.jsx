@@ -21,7 +21,6 @@ const cardContentStyles = {
 
 const SCard = ({
   title = "",
-  description = "",
   shortDescription = "",
   price,
   brand = "",
@@ -41,8 +40,8 @@ const SCard = ({
         price={price}
         brand={brand}
         discount={discount}
-        hoverable
-        cover={<Thumbnail alt="example" src={isHovered && cover.length > 1 ? cover[1] : cover[0]} />}
+        hoverable={hoverable}
+        cover={<Thumbnail alt="example" src={hoverable && isHovered && cover.length > 1 ? cover[1] : cover[0]} />}
         onMouseEnter={() => setIsHovered(!isHovered)}
         onMouseLeave={() => setIsHovered(!isHovered)}
         headStyle={cardHeaderStyles}

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const Product = () => {
   let { productId } = useParams();
-  const [data, setData] = useState({ });
+  const [data, setData] = useState();
   useEffect(async () => {
     const fetchData = async () => {
       const result = await axios(
@@ -19,10 +19,14 @@ const Product = () => {
   }, []);
   return (
     <React.Fragment>
-      <p>Product: {data && data.id}</p>
-      {data.images && data.images.map(image => (
-        <img src={image}></img>
-      ))}
+      {data &&
+        <React.Fragment>
+          <p>Product: {data.id}</p>
+          {data.images.map(image => (
+            <img src={image}></img>
+          ))}
+        </React.Fragment>
+      }
     </React.Fragment>
   );
 };
