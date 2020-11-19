@@ -107,7 +107,7 @@ const Actions = styled.div`
 
 const Thumbnail = styled.img`
   height: 260px;
-  object-fit: cover;
+  object-fit: contain;
 `
 
 SCard.propTypes = {

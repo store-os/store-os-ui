@@ -5,6 +5,10 @@
   height: 100vmin
 }
 
+.App section.ant-layout {
+  background-color: transparent;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
