@@ -3,18 +3,21 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Row, Col, Breadcrumb, Typography, Rate, Button } from "antd";
+import { BrowserRouter as Link } from "react-router-dom";
 
 const { Title, Paragraph } = Typography;
 
 const Product = () => {
   let { productId } = useParams();
   const [data, setData] = useState();
+  const [selectedImage, setSelectedImage] = useState();
   useEffect(async () => {
     const fetchData = async () => {
       const result = await axios(
         `${process.env.REACT_APP_PRODUCTS_URL}/${productId}`
       );
       setData(result.data);
+      setSelectedImage(result.data.images[0]);
     };
 
     fetchData();
@@ -26,34 +29,60 @@ const Product = () => {
           <Col span={6}>
             <SecondaryImages>
               {data.images.map((image) => (
-                <img src={image}></img>
+                <img src={image} onClick={() => setSelectedImage(image)}></img>
               ))}
             </SecondaryImages>
           </Col>
           <Col span={10}>
-            <MainImage src={data.images[0]}></MainImage>
+            <MainImage src={selectedImage}></MainImage>
           </Col>
           <Col span={8} style={{ textAlign: "left", padding: "2%" }}>
             <Breadcrumb>
-              <Breadcrumb.Item>{data.levels.category}</Breadcrumb.Item>
-              <Breadcrumb.Item>{data.levels.subcategory}</Breadcrumb.Item>
-              <Breadcrumb.Item>{data.levels.subsubcategory}</Breadcrumb.Item>
+              <Breadcrumb.Item href={"/catalog?category=" + data.levels.category}>
+                {data.levels.category}
+              </Breadcrumb.Item>
+              <Breadcrumb.Item href={"/catalog?category=" + data.levels.category + "&subcategory=" + data.levels.subcategory}>{data.levels.subcategory}</Breadcrumb.Item>
+              <Breadcrumb.Item href={"/catalog?category=" + data.levels.category + "&subcategory=" + data.levels.subcategory + "&subsubcategory=" + data.levels.subsubcategory}>{data.levels.subsubcategory}</Breadcrumb.Item>
             </Breadcrumb>
             <Title level={1} style={{ marginTop: "2%" }}>
               {data.title}
             </Title>
             <p>Product: {data.id}</p>
             <ValueContainer>
-              <Price level={3} style={{ margin: 0 }}>
-                {data.price}
-              </Price>
-              <Rating></Rating>
+              {data.discount_price > 0 ? (
+                <React.Fragment>
+                  <Price level={3} style={{ margin: 0 }}>
+                    {data.price * ((100 - data.discount_price) / 100)}
+                  </Price>
+                  <Price
+                    level={3}
+                    style={{ margin: 0, textDecoration: "line-through" }}
+                  >
+                    {data.price}
+                  </Price>
+                </React.Fragment>
+              ) : (
+                <Price level={3} style={{ margin: 0 }}>
+                  {data.price}
+                </Price>
+              )}
+              {data.rating && <Rating></Rating>}
             </ValueContainer>
-            {console.log(data)}
-            <Description style={{marginBottom: "4%"}}>{data.description}</Description>
-            <Button type="primary" block>
-              Add to cart
-            </Button>
+            {(data.description && (
+              <Description style={{ marginBottom: "4%" }}>
+                {data.description}
+              </Description>
+            )) || (
+              <Description style={{ marginBottom: "4%" }}>
+                There are no description for this product
+              </Description>
+            )}
+
+            {data.available && (
+              <Button type="primary" block>
+                Add to cart
+              </Button>
+            )}
           </Col>
         </Row>
       )}
@@ -66,13 +95,15 @@ const Main = styled.main`
 `;
 
 const SecondaryImages = styled.div`
+  height: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow-y: auto;
   img {
     width: 48%;
-    margin-bottom: 10%;
+    margin-bottom: 12%;
     &:hover {
       cursor: pointer;
     }
@@ -81,6 +112,9 @@ const SecondaryImages = styled.div`
 
 const MainImage = styled.img`
   width: 84%;
+  height: 64%;
+  padding-top: 2%;
+  object-fit: contain;
 `;
 
 const ValueContainer = styled.div`

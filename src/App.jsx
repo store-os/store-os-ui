@@ -1,10 +1,12 @@
 import "./App.css";
+import styled from "styled-components";
 import Home from "./pages/Home.jsx";
 import Catalog from "./pages/Catalog.jsx";
 import Blog from "./pages/Blog.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Product from "./pages/Product.jsx";
+import mainLogo from "../src/logo.svg";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Layout } from "antd";
 
@@ -15,12 +17,16 @@ function App() {
     <Router>
       <div className="App">
         <Layout>
-          <Header>
-            <Link to="/">Home</Link>
-            <Link to="/catalog">Catalog</Link>
-            <Link to="/blog">Blog</Link>
-            <Link to="/about">About</Link>
-            <Link to="/contact">Contact</Link>
+          <Header style={{ display: "flex" }}>
+            <img
+              src={mainLogo}
+              style={{ width: 60, display: "flex", marginRight: 20 }}
+            />
+            <Nav to="/">Home</Nav>
+            <Nav to="/catalog">Catalog</Nav>
+            <Nav to="/blog">Blog</Nav>
+            <Nav to="/about">About</Nav>
+            <Nav to="/contact">Contact</Nav>
           </Header>
           <Switch>
             <Route exact path="/" component={Home} />
@@ -36,5 +42,10 @@ function App() {
     </Router>
   );
 }
+
+const Nav = styled(Link)`
+  margin-right: 20px;
+  color: white;
+`;
 
 export default App;
