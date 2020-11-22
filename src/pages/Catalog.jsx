@@ -40,7 +40,7 @@ const Catalog = ({location}) => {
                     title={item.title}
                     brand=""
                     hoverable={true}
-                    price={item.price}
+                    price={item.final_price}
                     cover={item.images}
                     available={item.available}
                     details={`Ref. ${item.id}`}
