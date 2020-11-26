@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import { Button, Card } from "antd";
 import PropTypes from "prop-types";
-import React, { useState } from 'react';
-import {
-  Link
-} from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
@@ -29,53 +27,66 @@ const SCard = ({
   cover,
   available,
   details = "",
-  productId = ""
+  productId = "",
 }) => {
-
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <React.Fragment>
-      <Link to={`product/${productId}`}>
-        <MainCard
-          price={price}
-          brand={brand}
-          discount={discount}
-          hoverable={hoverable}
-          cover={<Thumbnail alt="example" src={hoverable && isHovered && cover.length > 1 ? cover[1] : cover[0]} />}
-          onMouseEnter={() => setIsHovered(!isHovered)}
-          onMouseLeave={() => setIsHovered(!isHovered)}
-          headStyle={cardHeaderStyles}
-          bodyStyle={cardContentStyles}
-        >
-          <Brand>{brand}</Brand>
+      <MainCard
+        price={price}
+        brand={brand}
+        discount={discount}
+        hoverable={hoverable}
+        cover={
+          <Link to={`product/${productId}`}>
+            <Thumbnail
+              alt="example"
+              src={
+                hoverable && isHovered && cover.length > 1 ? cover[1] : cover[0]
+              }
+            />
+          </Link>
+        }
+        onMouseEnter={() => setIsHovered(!isHovered)}
+        onMouseLeave={() => setIsHovered(!isHovered)}
+        headStyle={cardHeaderStyles}
+        bodyStyle={cardContentStyles}
+      >
+        <Brand>{brand}</Brand>
+        <Link class="title__link-product" to={`product/${productId}`}>
           <Meta title={title} description={shortDescription} />
-          <Details>{details}</Details>
-          <Actions details={details}>
-            <p>{price}€</p>
-          </Actions>
-        </MainCard>
-      </Link>
-      {available && (
-        <Button type="primary" shape="round" size="middle"
-          className="snipcart-add-item"
-          data-item-id={productId}
-          data-item-price={price}
-          data-item-url={"/product/" + productId}
-          data-item-description={shortDescription}
-          data-item-image={cover[0]}
-          data-item-name={title}>
-          Add to cart
-        </Button>
-      )}
-    </React.Fragment>
+        </Link>
 
+        <Details>{details}</Details>
+        <Actions details={details}>
+          <p>{price}€</p>
+          {available && (
+            <Button
+              type="primary"
+              shape="round"
+              size="middle"
+              className="snipcart-add-item"
+              data-item-id={productId}
+              data-item-price={price}
+              data-item-url={"/product/" + productId}
+              data-item-description={shortDescription}
+              data-item-image={cover[0]}
+              data-item-name={title}
+            >
+              Add to cart
+            </Button>
+          )}
+        </Actions>
+      </MainCard>
+    </React.Fragment>
   );
 };
 
 const MainCard = styled(Card)`
   display: flex;
   flex-direction: column;
+  cursor: default;
   div.ant-card-body,
   div.ant-card-meta {
     width: 100%;
@@ -89,6 +100,10 @@ const MainCard = styled(Card)`
     text-align: left;
     line-height: initial;
   }
+
+  a.title__link-product {
+    width: 100%;
+  }
 `;
 
 const Brand = styled.h1`
@@ -100,7 +115,7 @@ const Brand = styled.h1`
 const Details = styled.span`
   margin-top: 6px;
   font-size: 12px;
-  color: #3F743D;
+  color: #3f743d;
 `;
 
 const Actions = styled.div`
@@ -118,7 +133,7 @@ const Actions = styled.div`
 const Thumbnail = styled.img`
   height: 260px;
   object-fit: contain;
-`
+`;
 
 SCard.propTypes = {
   title: PropTypes.string,
@@ -127,7 +142,7 @@ SCard.propTypes = {
   brand: PropTypes.string,
   discount: PropTypes.number,
   hoverable: PropTypes.bool,
-  cover: PropTypes.array
-}
+  cover: PropTypes.array,
+};
 
 export default SCard;
