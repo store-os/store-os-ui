@@ -35,31 +35,41 @@ const SCard = ({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <Link to={`product/${productId}`}>
-      <MainCard
-        price={price}
-        brand={brand}
-        discount={discount}
-        hoverable={hoverable}
-        cover={<Thumbnail alt="example" src={hoverable && isHovered && cover.length > 1 ? cover[1] : cover[0]} />}
-        onMouseEnter={() => setIsHovered(!isHovered)}
-        onMouseLeave={() => setIsHovered(!isHovered)}
-        headStyle={cardHeaderStyles}
-        bodyStyle={cardContentStyles}
-      >
-        <Brand>{brand}</Brand>
-        <Meta title={title} description={shortDescription} />
-        <Details>{details}</Details>
-        <Actions details={details}>
-          <p>{price}€</p>
-          {available && (
-            <Button type="primary" shape="round" size="middle">
-              Add to cart
-            </Button>
-          )}
-        </Actions>
-      </MainCard>
-    </Link>
+    <React.Fragment>
+      <Link to={`product/${productId}`}>
+        <MainCard
+          price={price}
+          brand={brand}
+          discount={discount}
+          hoverable={hoverable}
+          cover={<Thumbnail alt="example" src={hoverable && isHovered && cover.length > 1 ? cover[1] : cover[0]} />}
+          onMouseEnter={() => setIsHovered(!isHovered)}
+          onMouseLeave={() => setIsHovered(!isHovered)}
+          headStyle={cardHeaderStyles}
+          bodyStyle={cardContentStyles}
+        >
+          <Brand>{brand}</Brand>
+          <Meta title={title} description={shortDescription} />
+          <Details>{details}</Details>
+          <Actions details={details}>
+            <p>{price}€</p>
+          </Actions>
+        </MainCard>
+      </Link>
+      {available && (
+        <Button type="primary" shape="round" size="middle"
+          className="snipcart-add-item"
+          data-item-id={productId}
+          data-item-price={price}
+          data-item-url={"/product/" + productId}
+          data-item-description={shortDescription}
+          data-item-image={cover[0]}
+          data-item-name={title}>
+          Add to cart
+        </Button>
+      )}
+    </React.Fragment>
+
   );
 };
 

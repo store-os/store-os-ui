@@ -27,6 +27,9 @@ function App() {
             <Nav to="/blog">Blog</Nav>
             <Nav to="/about">About</Nav>
             <Nav to="/contact">Contact</Nav>
+            <Nav className="snipcart-checkout">Cart</Nav>
+            <span className="snipcart-items-count"></span>
+            {/* <span className="snipcart-total-price"></span> */}
           </Header>
           <Switch>
             <Route exact path="/" component={Home} />
