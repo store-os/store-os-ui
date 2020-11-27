@@ -45,12 +45,10 @@ function App() {
                 <i class="mi-user" />
               </Nav>
               <Nav className="snipcart-checkout">
-                <Badge count={2} style={{ backgroundColor: "#1890ff" }}>
+                <Badge count={<span className="snipcart-items-count ant-badge-count"></span>} style={{ backgroundColor: "#1890ff" }}>
                   <i class="mi-shopping-cart" />
                 </Badge>
               </Nav>
-              {/* <span className="snipcart-items-count"></span> */}
-              {/* <span className="snipcart-total-price"></span> */}
             </Action>
           </Header>
           <Search>

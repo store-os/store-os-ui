@@ -55,12 +55,20 @@ const SCard = ({
       >
         <Brand>{brand}</Brand>
         <Link class="title__link-product" to={`product/${productId}`}>
-          <Meta title={title} description={shortDescription} />
+          <Meta title={title} description={shortDescription}/>
         </Link>
 
         <Details>{details}</Details>
         <Actions details={details}>
-          <p>{price}€</p>
+          {discount ? (
+            <Price>
+              <p>{discount}€</p>
+              <p>{price}€</p>
+            </Price>
+          ) : (
+            <p>{price}€</p>
+          )}
+
           {available && (
             <Button
               type="primary"
@@ -127,6 +135,21 @@ const Actions = styled.div`
   p {
     font-size: 18px;
     margin: 0;
+  }
+`;
+
+const Price = styled.div`
+  display: flex;
+  align-items: baseline;
+  font-size: 22px;
+  & > p:first-of-type {
+    margin-right: 10px;
+    font-size: 22px;
+  }
+  & > p:last-of-type {
+    text-decoration: line-through;
+    color: #b9b9b9;
+    font-size: 16px;
   }
 `;
 

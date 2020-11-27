@@ -34,13 +34,15 @@ const Catalog = ({location}) => {
           </Sider>
           <MainContent>
             <Row gutter={[48, 48]}>
+              { console.log({data}) }
               {data.products.map((item) => (
                 <Col key={item.id} span={6}>
                   <SCard
                     title={item.title}
                     brand=""
                     hoverable={true}
-                    price={item.final_price}
+                    price={item.price}
+                    discount={item.final_price}
                     cover={item.images}
                     available={item.available}
                     details={`Ref. ${item.id}`}
