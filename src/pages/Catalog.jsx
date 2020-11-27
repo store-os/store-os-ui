@@ -42,6 +42,7 @@ const Catalog = ({location}) => {
                     brand=""
                     hoverable={true}
                     price={item.price}
+                    url={item.url}
                     discount={item.final_price}
                     cover={item.images}
                     available={item.available}
