@@ -1,5 +1,9 @@
-name: Test
-on: [push]
+name: Store-UI
+
+on:
+  push:
+    branches:
+      - main
   
 jobs:
   build:
@@ -49,3 +53,5 @@ jobs:
       - name: Deploy to S3
         run: aws s3 sync . s3://store-ui.alchersan.com
         working-directory: react-github-actions-build
+      - name: Invalidate Cache Cloudfront
+        run: aws cloudfront create-invalidation --distribution-id E15LMAAXD0J0IZ --paths "/*"
