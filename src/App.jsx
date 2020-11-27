@@ -41,7 +41,7 @@ function App() {
               <Nav to="/contact">Contact</Nav>
             </Navigation>
             <Action>
-              <Nav>
+              <Nav className="snipcart-customer-signin">
                 <i class="mi-user" />
               </Nav>
               <Nav className="snipcart-checkout">
