@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import { Layout, Badge, Menu, Dropdown, Space } from "antd";
 import { Link } from "react-router-dom";
@@ -32,57 +33,66 @@ const AppHeader = () => {
   );
 
   return (
-    <Header
-      style={{
-        display: "flex",
-        alignItems: "center",
-        padding: "0 16%",
-        backgroundColor: "white",
-        lineHeight: "initial",
-      }}
-    >
-      <Logo>
-        <img
-          src={mainLogo}
-          style={{ width: 60, display: "flex", marginRight: 20 }}
-        />
-      </Logo>
-      <Navigation size="large">
-        <Nav to="/">Home</Nav>
-        <Dropdown overlay={menu}>
-          <Nav
-            className="ant-dropdown-link"
-            onClick={(e) => e.preventDefault()}
-            to="/catalog"
-          >
-            Catalog
+    <React.Fragment>
+      <Header
+        style={{
+          display: "flex",
+          alignItems: "center",
+          padding: "0 16%",
+          backgroundColor: "white",
+          lineHeight: "initial",
+        }}
+      >
+        <Logo>
+          <img
+            src={mainLogo}
+            style={{ width: 60, display: "flex", marginRight: 20 }}
+          />
+        </Logo>
+        <Navigation size="large">
+          <Nav to="/">Home</Nav>
+          <Dropdown overlay={menu}>
+            <Nav
+              className="ant-dropdown-link"
+              onClick={(e) => e.preventDefault()}
+              to="/catalog"
+            >
+              Catalog
+            </Nav>
+          </Dropdown>
+          <Nav to="/blog">Blog</Nav>
+          <Nav to="/about">About</Nav>
+          <Nav to="/contact">Contact</Nav>
+        </Navigation>
+        <Action size="middle">
+          <Nav className="site-search">
+            <i className="mi-search" /> <span>Search</span>
           </Nav>
-        </Dropdown>
-        <Nav to="/blog">Blog</Nav>
-        <Nav to="/about">About</Nav>
-        <Nav to="/contact">Contact</Nav>
-      </Navigation>
-      <Action size="middle">
-        <Nav className="site-search">
-          <i className="mi-search" /> <span>Search</span>
-        </Nav>
-        <Nav className="snipcart-customer-signin">
-          <i className="mi-user" />
-        </Nav>
-        <Nav className="snipcart-checkout">
-          <Badge
-            count={
-              <span className="snipcart-items-count ant-badge-count"></span>
-            }
-            style={{ backgroundColor: "#1890ff" }}
-          >
-            <i className="mi-shopping-cart" />
-          </Badge>
-        </Nav>
-      </Action>
-    </Header>
+          <Nav className="snipcart-customer-signin">
+            <i className="mi-user" />
+          </Nav>
+          <Nav className="snipcart-checkout">
+            <Badge
+              count={
+                <span className="snipcart-items-count ant-badge-count"></span>
+              }
+              style={{ backgroundColor: "#1890ff" }}
+            >
+              <i className="mi-shopping-cart" />
+            </Badge>
+          </Nav>
+        </Action>
+      </Header>
+      <SubHeader />
+    </React.Fragment>
   );
 };
+
+const SubHeader = styled.div`
+  height: 48px;
+  widht: 100%;
+  background-color: #131313;
+`;
 
 const Nav = styled(Link)``;
 
