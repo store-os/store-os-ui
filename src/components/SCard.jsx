@@ -21,6 +21,7 @@ const SCard = ({
   title = "",
   shortDescription = "",
   price,
+  url="",
   brand = "",
   discount,
   hoverable = false,
@@ -77,7 +78,7 @@ const SCard = ({
               className="snipcart-add-item"
               data-item-id={productId}
               data-item-price={price}
-              data-item-url={"/product/" + productId}
+              data-item-url={url}
               data-item-description={shortDescription}
               data-item-image={cover[0]}
               data-item-name={title}
@@ -162,6 +163,7 @@ SCard.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   price: PropTypes.number,
+  url: PropTypes.string,
   brand: PropTypes.string,
   discount: PropTypes.number,
   hoverable: PropTypes.bool,

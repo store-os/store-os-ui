@@ -79,7 +79,17 @@ const Product = () => {
             )}
 
             {data.available && (
-              <Button type="primary" block>
+              <Button 
+                type="primary" 
+                block
+                className="snipcart-add-item"
+                data-item-id={data.id}
+                data-item-price={data.price}
+                data-item-url={data.url}
+                data-item-description={data.shortDescription}
+                data-item-image={data.images[0]}
+                data-item-name={data.title}
+              >
                 Add to cart
               </Button>
             )}
