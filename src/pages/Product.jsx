@@ -124,11 +124,9 @@ const Product = () => {
               </Button>
             )}
 
-            {console.log(data)}
-
             <Divider />
 
-            <div class="ant-descriptions-title" style={{ marginBottom: 20 }}>
+            <div className="ant-descriptions-title" style={{ marginBottom: 20 }}>
               Características
             </div>
 
@@ -148,7 +146,7 @@ const Product = () => {
 
             <Divider />
 
-            <div class="ant-descriptions-title" style={{ marginBottom: 20 }}>
+            <div className="ant-descriptions-title" style={{ marginBottom: 20 }}>
               Equipamiento
             </div>
 

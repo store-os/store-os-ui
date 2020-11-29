@@ -55,7 +55,7 @@ const SCard = ({
         bodyStyle={cardContentStyles}
       >
         <Brand>{brand}</Brand>
-        <Link class="title__link-product" to={`product/${productId}`}>
+        <Link className="title__link-product" to={`product/${productId}`}>
           <Meta title={title} description={shortDescription}/>
         </Link>
 

@@ -1,34 +1,56 @@
-import { Checkbox, Typography, Divider } from "antd";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Checkbox, Typography, Divider, Tree } from "antd";
 import styled from "styled-components";
-import React from "react";
 
 const CheckboxGroup = Checkbox.Group;
 
 const SCategories = ({ categories = {} }) => {
-  return (
-    <React.Fragment>
-      <CategoriesContainer>
-        {categories &&
-          categories.map((item) => (
-            <React.Fragment>
-              <CategoryContainer>
-                <Checkbox>
-                  {item.key} ({item.doc_count})
-                </Checkbox>
-                <SubCategoryContainer>
-                  {item.subcategories &&
-                    item.subcategories.buckets.map((sub) => {
-                      {
-                        return <Checkbox>{sub.key}</Checkbox>;
-                      }
-                    })}
-                </SubCategoryContainer>
-              </CategoryContainer>
-              <Divider />
-            </React.Fragment>
-          ))}
-      </CategoriesContainer>
-    </React.Fragment>
+  const [treeData, setTreeData] = useState([]);
+  const [data, setData] = useState();
+
+  useEffect(async () => {
+    const fetchData = async () => {
+      const result = await axios(process.env.REACT_APP_PRODUCTS_URL);
+      let treeStructure = [];
+      setData(result.data);
+      {
+        data &&
+          categories &&
+          categories.map((item, i) => {
+            let children = [];
+            item.subcategories &&
+              item.subcategories.buckets.map((sub, j) => {
+                let subchildren = [];
+                sub.subsubcategories &&
+                  sub.subsubcategories.buckets.map((subsub, k) => {
+                    subchildren.push({
+                      title: subsub.key,
+                      key: `${i}-${j}-${k}`,
+                    });
+                  });
+                children.push({
+                  title: sub.key,
+                  key: `${i}-${j}`,
+                  children: subchildren,
+                });
+              });
+            treeStructure.push({
+              title: item.key,
+              key: `${i}`,
+              children,
+            });
+          });
+        setTreeData(treeStructure);
+      }
+    };
+    fetchData();
+  }, [treeData]);
+
+  return treeData ? (
+    <Tree checkable treeData={treeData} />
+  ) : (
+    <p>Rendering...</p>
   );
 };
 
