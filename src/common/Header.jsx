@@ -1,34 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Layout, Badge, Menu, Dropdown, Space } from "antd";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import mainLogo from "../../src/logo.svg";
 
 const { Header } = Layout;
 
-const AppHeader = () => {
+const AppHeader = ({data}) => {
+
   const menu = (
     <Menu>
       <Menu.Item>
-        <a rel="noopener noreferrer" href="/catalog">
-          All products
-        </a>
+        <a href={`${window.location.origin}/catalog`}>Todos los productos</a>
       </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="#">
-          Professional
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="#">
-          Home Garden
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="#">
-          Services
-        </a>
-      </Menu.Item>
+      {data &&
+        data.aggregations.categories.buckets &&
+        data.aggregations.categories.buckets.map((category) => {
+          return (
+            <Menu.Item>
+              <a
+                href={`${window.location.origin}/catalog?category=${category.key}`}
+              >
+                {category.key}
+              </a>
+            </Menu.Item>
+          );
+        })}
     </Menu>
   );
 
