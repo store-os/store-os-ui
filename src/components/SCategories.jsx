@@ -9,43 +9,42 @@ const SCategories = ({ categories = {} }) => {
   const [treeData, setTreeData] = useState([]);
   const [data, setData] = useState();
 
-  useEffect(async () => {
-    const fetchData = async () => {
-      const result = await axios(process.env.REACT_APP_PRODUCTS_URL);
-      let treeStructure = [];
-      setData(result.data);
-      {
-        data &&
-          categories &&
-          categories.map((item, i) => {
-            let children = [];
-            item.subcategories &&
-              item.subcategories.buckets.map((sub, j) => {
-                let subchildren = [];
-                sub.subsubcategories &&
-                  sub.subsubcategories.buckets.map((subsub, k) => {
-                    subchildren.push({
-                      title: subsub.key,
-                      key: `${i}-${j}-${k}`,
-                    });
+  const fetchData = async () => {
+    const result = await axios(process.env.REACT_APP_PRODUCTS_URL);
+    setData(result.data);
+    {
+      data &&
+        categories &&
+        categories.map((item, i) => {
+          let children = [];
+          item.subcategories &&
+            item.subcategories.buckets.map((sub, j) => {
+              let subchildren = [];
+              sub.subsubcategories &&
+                sub.subsubcategories.buckets.map((subsub, k) => {
+                  subchildren.push({
+                    title: subsub.key,
+                    key: `${i}-${j}-${k}`,
                   });
-                children.push({
-                  title: sub.key,
-                  key: `${i}-${j}`,
-                  children: subchildren,
                 });
+              children.push({
+                title: sub.key,
+                key: `${i}-${j}`,
+                children: subchildren,
               });
-            treeStructure.push({
-              title: item.key,
-              key: `${i}`,
-              children,
             });
+          treeData.push({
+            title: item.key,
+            key: `${i}`,
+            children,
           });
-        setTreeData(treeStructure);
-      }
-    };
+        });
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, [treeData]);
+  }, []);
 
   return treeData ? (
     <Tree checkable treeData={treeData} />
