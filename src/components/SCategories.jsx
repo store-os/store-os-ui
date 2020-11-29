@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Checkbox, Typography, Divider, Tree } from "antd";
+import { Checkbox, Tree } from "antd";
 import styled from "styled-components";
 
 const CheckboxGroup = Checkbox.Group;
 
-const SCategories = ({ categories = {} }) => {
+const SCategories = ({ data = {}, onChange }) => {
   const [treeData, setTreeData] = useState([]);
-  const [data, setData] = useState();
 
   const fetchData = async () => {
     let treeCategories = [];
-    setData(categories);
     {
-        categories &&
-        categories.map((item, i) => {
+      data && data.aggregations && data.aggregations.categories.buckets &&
+        data.aggregations.categories.buckets.map((item, i) => {
           let children = [];
           item.subcategories &&
             item.subcategories.buckets.map((sub, j) => {
@@ -23,23 +21,37 @@ const SCategories = ({ categories = {} }) => {
                 sub.subsubcategories.buckets.map((subsub, k) => {
                   subchildren.push({
                     title: subsub.key,
-                    key: `${i}-${j}-${k}`,
+                    key: `subsubcategory=${subsub.key}`,
                   });
                 });
               children.push({
                 title: sub.key,
-                key: `${i}-${j}`,
+                key: `subcategory=${sub.key}`,
                 children: subchildren,
               });
             });
           treeCategories.push({
             title: item.key,
-            key: `${i}`,
+            key: `category=${item.key}`,
             children,
           });
         });
-        setTreeData(treeCategories);
+      setTreeData(treeCategories);
     }
+  };
+
+  const onCheck = (checkedKeys, info) => {
+    console.log('onCheck', checkedKeys, info);
+    let query = "";
+    checkedKeys.map(item => {
+      query = query + item + '&';
+    });
+    const result = axios(
+      `${process.env.REACT_APP_PRODUCTS_URL}?${query}`
+    );
+    result.then(response => {
+      onChange({response, query});
+    });
   };
 
   useEffect(() => {
@@ -47,10 +59,10 @@ const SCategories = ({ categories = {} }) => {
   }, []);
 
   return treeData ? (
-    <Tree checkable treeData={treeData} />
+    <Tree checkable treeData={treeData} onCheck={onCheck} />
   ) : (
-    <p>Rendering...</p>
-  );
+      <p>Rendering...</p>
+    );
 };
 
 const CategoriesContainer = styled.div`

@@ -25,6 +25,11 @@ const Catalog = ({ location }) => {
     fetchData();
   }, []);
 
+  function applyFilter(evt) {
+    console.log(evt);
+    setData(evt.response.data);
+  }
+
   return (
     <React.Fragment>
       {data && (
@@ -36,8 +41,8 @@ const Catalog = ({ location }) => {
           >
             <Collapse defaultActiveKey={["1", "2"]} ghost extra={<span>325</span>}>
               <Panel header="Categories" key="1">
-                <SCategories
-                  categories={data.aggregations.categories.buckets}
+                <SCategories onChange={applyFilter}
+                  data={data}
                 ></SCategories>
               </Panel>
               <Panel header="Price" key="2">
@@ -52,7 +57,6 @@ const Catalog = ({ location }) => {
 
           <MainContent>
             <Row gutter={[48, 48]}>
-              {console.log({ data })}
               {data.products.map((item) => (
                 <Col key={item.id} span={6}>
                   <SCard
