@@ -10,10 +10,9 @@ const SCategories = ({ categories = {} }) => {
   const [data, setData] = useState();
 
   const fetchData = async () => {
-    const result = await axios(process.env.REACT_APP_PRODUCTS_URL);
-    setData(result.data);
+    let treeCategories = [];
+    setData(categories);
     {
-      data &&
         categories &&
         categories.map((item, i) => {
           let children = [];
@@ -33,12 +32,13 @@ const SCategories = ({ categories = {} }) => {
                 children: subchildren,
               });
             });
-          treeData.push({
+          treeCategories.push({
             title: item.key,
             key: `${i}`,
             children,
           });
         });
+        setTreeData(treeCategories);
     }
   };
 

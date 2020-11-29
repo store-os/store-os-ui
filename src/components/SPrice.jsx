@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { Slider } from "antd";
 
-const SPrice = ({ disabled = false, max, min, range = false }) => {
+const SPrice = ({ disabled = false, minValue, maxValue, range = false }) => {
   return (
-    <React.Fragment>
-      <Slider
-        max={max}
-        min={min}
-        range={range}
-        defaultValue={[120, 900]}
-        disabled={disabled}
-      ></Slider>
-    </React.Fragment>
+    <Slider
+      max={maxValue}
+      min={minValue}
+      range={range}
+      marks={{[minValue]: minValue , [maxValue]: maxValue}}
+      defaultValue={[minValue, maxValue]}
+      disabled={disabled}
+    ></Slider>
   );
 };
 
