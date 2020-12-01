@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Checkbox, Tree } from "antd";
 import styled from "styled-components";
 
 const CheckboxGroup = Checkbox.Group;
 
-const SCategories = ({ data = {}, onChange }) => {
+const SCategories = ({ data = {}, onCategoriesQuery }) => {
   const [treeData, setTreeData] = useState([]);
 
   const fetchData = async () => {
@@ -46,12 +45,8 @@ const SCategories = ({ data = {}, onChange }) => {
     checkedKeys.map(item => {
       query = query + item + '&';
     });
-    const result = axios(
-      `${process.env.REACT_APP_PRODUCTS_URL}?${query}`
-    );
-    result.then(response => {
-      onChange({response, query});
-    });
+    console.log('Category query' + query);
+    onCategoriesQuery({query});
   };
 
   useEffect(() => {

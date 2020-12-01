@@ -9,25 +9,52 @@ import SPrice from "../components/SPrice";
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
 
+let queryPrice = "",
+  queryCategories = "";
+
 const Catalog = ({ location }) => {
   const [data, setData] = useState();
+  const [fullQuery, setFullQuery] = useState("");
   useEffect(() => {
     async function fetchData() {
-      const result = await axios(
-        location.search
-          ? process.env.REACT_APP_PRODUCTS_URL + location.search
-          : process.env.REACT_APP_PRODUCTS_URL
-      );
-
+      let result;
+      if (fullQuery === "") {
+        result = await axios(
+          location.search
+            ? process.env.REACT_APP_PRODUCTS_URL + location.search
+            : process.env.REACT_APP_PRODUCTS_URL
+        );
+      } else {
+        result = await axios(
+          fullQuery
+            ? process.env.REACT_APP_PRODUCTS_URL + fullQuery
+            : process.env.REACT_APP_PRODUCTS_URL
+        );
+      }
       setData(result.data);
     }
 
     fetchData();
-  }, []);
+  }, [fullQuery]);
 
-  function applyFilter(evt) {
+  function applyFilterCategories(evt) {
     console.log(evt);
-    setData(evt.response.data);
+    queryCategories = evt.query;
+    if (queryCategories !== "") {
+      setFullQuery(`?${queryCategories}&${queryPrice}`);
+    } else {
+      setFullQuery(`?${queryPrice}`);
+    }
+  }
+
+  function applyFilterPrice(evt) {
+    console.log(evt);
+    queryPrice = evt.query;
+    if (queryPrice !== "") {
+      setFullQuery(`?${queryPrice}&${queryCategories}`);
+    } else {
+      setFullQuery(`?${queryCategories}`);
+    }
   }
 
   return (
@@ -39,9 +66,14 @@ const Catalog = ({ location }) => {
             theme="light"
             style={{ padding: "0 12px", marginTop: "40px" }}
           >
-            <Collapse defaultActiveKey={["1", "2"]} ghost extra={<span>325</span>}>
+            <Collapse
+              defaultActiveKey={["1", "2"]}
+              ghost
+              extra={<span>325</span>}
+            >
               <Panel header="Categories" key="1">
-                <SCategories onChange={applyFilter}
+                <SCategories
+                  onCategoriesQuery={applyFilterCategories}
                   data={data}
                 ></SCategories>
               </Panel>
@@ -50,6 +82,7 @@ const Catalog = ({ location }) => {
                   maxValue={data.aggregations.maxPrice.value}
                   minValue={data.aggregations.minPrice.value}
                   range={true}
+                  onPriceQuery={applyFilterPrice}
                 />
               </Panel>
             </Collapse>
