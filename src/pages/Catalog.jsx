@@ -47,9 +47,11 @@ const Catalog = ({ location }) => {
               </Panel>
               <Panel header="Price" key="2">
                 <SPrice
-                  maxValue={data.aggregations.maxPrice.value}
+                  data={data}
+                  /*maxValue={data.aggregations.maxPrice.value}
                   minValue={data.aggregations.minPrice.value}
-                  range={true}
+                  range={true}*/
+                  onAfterChange={applyFilter}
                 />
               </Panel>
             </Collapse>
