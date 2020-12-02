@@ -5,12 +5,14 @@ import { Row, Col, Layout, Collapse } from "antd";
 import styled from "styled-components";
 import SCategories from "../components/SCategories";
 import SPrice from "../components/SPrice";
+import SSort from "../components/SSort";
 
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
 
 let queryPrice = "",
-  queryCategories = "";
+  queryCategories = "",
+  querySort = "fieldsort=title.keyword&order=asc";
 
 const Catalog = ({ location }) => {
   const [data, setData] = useState();
@@ -41,9 +43,9 @@ const Catalog = ({ location }) => {
     console.log(evt);
     queryCategories = evt.query;
     if (queryCategories !== "") {
-      setFullQuery(`?${queryCategories}&${queryPrice}`);
+      setFullQuery(`?${queryCategories}&${queryPrice}&${querySort}`);
     } else {
-      setFullQuery(`?${queryPrice}`);
+      setFullQuery(`?${queryPrice}&${querySort}`);
     }
   }
 
@@ -51,7 +53,17 @@ const Catalog = ({ location }) => {
     console.log(evt);
     queryPrice = evt.query;
     if (queryPrice !== "") {
-      setFullQuery(`?${queryPrice}&${queryCategories}`);
+      setFullQuery(`?${queryPrice}&${queryCategories}&${querySort}`);
+    } else {
+      setFullQuery(`?${queryCategories}&${querySort}`);
+    }
+  }
+
+  function applyFilterSort(evt) {
+    console.log(evt);
+    querySort = evt.query;
+    if (querySort !== "") {
+      setFullQuery(`?${queryCategories}&${queryPrice}&${querySort}`);
     } else {
       setFullQuery(`?${queryCategories}`);
     }
@@ -83,6 +95,11 @@ const Catalog = ({ location }) => {
                   minValue={data.aggregations.minPrice.value}
                   range={true}
                   onPriceQuery={applyFilterPrice}
+                />
+              </Panel>
+              <Panel header="Sort" key="3">
+                <SSort
+                  onSortQuery={applyFilterSort}
                 />
               </Panel>
             </Collapse>
