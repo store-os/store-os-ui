@@ -6,7 +6,6 @@ const { Option } = Select;
 const SSort = ({ onSortQuery }) => {
 
   const onSortChange = (value) => {
-    console.log(value)
     let query = ""
     switch (value.value) {
       case "AZ": 
@@ -22,7 +21,6 @@ const SSort = ({ onSortQuery }) => {
         query = "fieldsort=final_price&order=desc";
         break;
     }
-    console.log(query)
     onSortQuery({query})
   };
 
@@ -30,7 +28,7 @@ const SSort = ({ onSortQuery }) => {
     <Select
     labelInValue
     defaultValue={{ value: 'A - Z' }}
-    style={{ width: 120 }}
+    style={{ width: 240 }}
     onChange={onSortChange}
     >
     <Option value="AZ">A - Z</Option>
