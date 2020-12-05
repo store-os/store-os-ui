@@ -40,7 +40,6 @@ const Catalog = ({ location }) => {
   }, [fullQuery]);
 
   function applyFilterCategories(evt) {
-    console.log(evt);
     queryCategories = evt.query;
     if (queryCategories !== "") {
       setFullQuery(`?${queryCategories}&${queryPrice}&${querySort}`);
@@ -50,7 +49,6 @@ const Catalog = ({ location }) => {
   }
 
   function applyFilterPrice(evt) {
-    console.log(evt);
     queryPrice = evt.query;
     if (queryPrice !== "") {
       setFullQuery(`?${queryPrice}&${queryCategories}&${querySort}`);
@@ -60,12 +58,11 @@ const Catalog = ({ location }) => {
   }
 
   function applyFilterSort(evt) {
-    console.log(evt);
     querySort = evt.query;
     if (querySort !== "") {
       setFullQuery(`?${queryCategories}&${queryPrice}&${querySort}`);
     } else {
-      setFullQuery(`?${queryCategories}`);
+      setFullQuery(`?${queryCategories}&${queryPrice}`);
     }
   }
 
@@ -97,15 +94,22 @@ const Catalog = ({ location }) => {
                   onPriceQuery={applyFilterPrice}
                 />
               </Panel>
-              <Panel header="Sort" key="3">
-                <SSort
-                  onSortQuery={applyFilterSort}
-                />
-              </Panel>
             </Collapse>
           </Sider>
 
           <MainContent>
+            <Row
+              gutter={[48, 48]}
+              style={{
+                padding: "0 24px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <TotalResults>Total results: {data.hits}</TotalResults>
+              <SSort onSortQuery={applyFilterSort} />
+            </Row>
             <Row gutter={[48, 48]}>
               {data.products.map((item) => (
                 <Col key={item.id} span={6}>
@@ -134,5 +138,7 @@ const Catalog = ({ location }) => {
 const MainContent = styled(Content)`
   padding: 36px;
 `;
+
+const TotalResults = styled.div``;
 
 export default Catalog;
