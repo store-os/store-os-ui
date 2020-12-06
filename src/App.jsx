@@ -30,7 +30,6 @@ function App() {
         defaultTitle="StoreOs"
         >
       <script>{`
-        {
           (function(h,o,t,j,a,r){
               h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
               h._hjSettings={hjid:2139255,hjsv:6};
