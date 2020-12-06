@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import SCard from "../components/SCard";
 import { Row, Col, Layout, Collapse } from "antd";
 import styled from "styled-components";
@@ -121,39 +122,50 @@ const Catalog = ({ location }) => {
               <SSort onSortQuery={applyFilterSort} />
             </Row>
             <Row gutter={[48, 48]}>
-              {products.map((item, index) => (
-                <Col key={item.id} span={6}>
-                  {products.length === index + 1 ? (
-                    <div ref={lastProductRef}>
-                      <SCard
-                        title={item.title}
-                        brand=""
-                        hoverable={true}
-                        price={item.price}
-                        url={item.url}
-                        discount={item.final_price}
-                        cover={item.images}
-                        available={item.available}
-                        details={`Ref. ${item.id}`}
-                        productId={item.id}
-                      ></SCard>
-                    </div>
-                  ) : (
-                    <SCard
-                      title={item.title}
-                      brand=""
-                      hoverable={true}
-                      price={item.price}
-                      url={item.url}
-                      discount={item.final_price}
-                      cover={item.images}
-                      available={item.available}
-                      details={`Ref. ${item.id}`}
-                      productId={item.id}
-                    ></SCard>
-                  )}
-                </Col>
-              ))}
+              <TransitionGroupCatalog>
+                {products.map((item, index) => (
+                  <CSSTransitionCatalog
+                    in={!loading}
+                    classNames="fade"
+                    timeout={420}
+                    key={index}
+                  >
+                    {products.length === index + 1 ? (
+                      <Col key={item.id} span={6}>
+                        <div ref={lastProductRef}>
+                          <SCard
+                            title={item.title}
+                            brand=""
+                            hoverable={true}
+                            price={item.price}
+                            url={item.url}
+                            discount={item.final_price}
+                            cover={item.images}
+                            available={item.available}
+                            details={`Ref. ${item.id}`}
+                            productId={item.id}
+                          ></SCard>
+                        </div>
+                      </Col>
+                    ) : (
+                      <Col key={item.id} span={6}>
+                        <SCard
+                          title={item.title}
+                          brand=""
+                          hoverable={true}
+                          price={item.price}
+                          url={item.url}
+                          discount={item.final_price}
+                          cover={item.images}
+                          available={item.available}
+                          details={`Ref. ${item.id}`}
+                          productId={item.id}
+                        ></SCard>
+                      </Col>
+                    )}
+                  </CSSTransitionCatalog>
+                ))}
+              </TransitionGroupCatalog>
             </Row>
             <div>{loading && "Loading..."}</div>
             <div>{error && "Error"}</div>
@@ -169,5 +181,37 @@ const MainContent = styled(Content)`
 `;
 
 const TotalResults = styled.div``;
+
+const TransitionGroupCatalog = styled(TransitionGroup)`
+  display: flex;
+  flex-flow: row wrap;
+`;
+
+const CSSTransitionCatalog = styled(CSSTransition)`
+  .fade-enter {
+    opacity: 0;
+  }
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 480s ease-in;
+  }
+  .fade-exit {
+    opacity: 1;
+  }
+  .fade-exit-active {
+    opacity: 0.2;
+    transition: opacity 120ms ease-out;
+  }
+  .fade-exit-done {
+    opacity: 0;
+  }
+  .fade-appear {
+    opacity: 0;
+  }
+  .fade-appear-active {
+    opacity: 1;
+    transition: opacity 480s ease;
+  }
+`;
 
 export default Catalog;
