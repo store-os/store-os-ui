@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import SCard from "../components/SCard";
-import axios from "axios";
 import { Row, Col, Layout, Collapse } from "antd";
 import styled from "styled-components";
 import SCategories from "../components/SCategories";
 import SPrice from "../components/SPrice";
 import SSort from "../components/SSort";
+import useScrollFilter from "../hooks/useScrollFilter";
 
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
@@ -15,54 +15,64 @@ let queryPrice = "",
   querySort = "fieldsort=title.keyword&order=asc";
 
 const Catalog = ({ location }) => {
-  const [data, setData] = useState();
   const [fullQuery, setFullQuery] = useState("");
-  useEffect(() => {
-    async function fetchData() {
-      let result;
-      if (fullQuery === "") {
-        result = await axios(
-          location.search
-            ? process.env.REACT_APP_PRODUCTS_URL + location.search
-            : process.env.REACT_APP_PRODUCTS_URL
-        );
-      } else {
-        result = await axios(
-          fullQuery
-            ? process.env.REACT_APP_PRODUCTS_URL + fullQuery
-            : process.env.REACT_APP_PRODUCTS_URL
-        );
-      }
-      setData(result.data);
-    }
+  const [pageNumber, setPageNumber] = useState(1);
 
-    fetchData();
-  }, [fullQuery]);
+  const { data, products, hasMore, loading, error } = useScrollFilter(
+    fullQuery,
+    pageNumber
+  );
+
+  const observer = useRef();
+  const lastProductRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && hasMore) {
+            setPageNumber((prevPageNumber) => prevPageNumber + 1);
+          }
+        },
+        { threshold: 1 }
+      );
+      if (node) {
+        observer.current.observe(node);
+      }
+    },
+    [loading, hasMore]
+  );
 
   function applyFilterCategories(evt) {
     queryCategories = evt.query;
     if (queryCategories !== "") {
-      setFullQuery(`?${queryCategories}&${queryPrice}&${querySort}`);
+      setFullQuery(`${queryCategories}&${queryPrice}&${querySort}`);
+      setPageNumber(1);
     } else {
-      setFullQuery(`?${queryPrice}&${querySort}`);
+      setFullQuery(`${queryPrice}&${querySort}`);
+      setPageNumber(1);
     }
   }
 
   function applyFilterPrice(evt) {
     queryPrice = evt.query;
     if (queryPrice !== "") {
-      setFullQuery(`?${queryPrice}&${queryCategories}&${querySort}`);
+      setFullQuery(`${queryPrice}&${queryCategories}&${querySort}`);
+      setPageNumber(1);
     } else {
-      setFullQuery(`?${queryCategories}&${querySort}`);
+      setFullQuery(`${queryCategories}&${querySort}`);
+      setPageNumber(1);
     }
   }
 
   function applyFilterSort(evt) {
     querySort = evt.query;
     if (querySort !== "") {
-      setFullQuery(`?${queryCategories}&${queryPrice}&${querySort}`);
+      setFullQuery(`${queryCategories}&${queryPrice}&${querySort}`);
+      setPageNumber(1);
     } else {
-      setFullQuery(`?${queryCategories}&${queryPrice}`);
+      setFullQuery(`${queryCategories}`);
+      setPageNumber(1);
     }
   }
 
@@ -111,23 +121,42 @@ const Catalog = ({ location }) => {
               <SSort onSortQuery={applyFilterSort} />
             </Row>
             <Row gutter={[48, 48]}>
-              {data.products.map((item) => (
+              {products.map((item, index) => (
                 <Col key={item.id} span={6}>
-                  <SCard
-                    title={item.title}
-                    brand=""
-                    hoverable={true}
-                    price={item.price}
-                    url={item.url}
-                    discount={item.final_price}
-                    cover={item.images}
-                    available={item.available}
-                    details={`Ref. ${item.id}`}
-                    productId={item.id}
-                  ></SCard>
+                  {products.length === index + 1 ? (
+                    <div ref={lastProductRef}>
+                      <SCard
+                        title={item.title}
+                        brand=""
+                        hoverable={true}
+                        price={item.price}
+                        url={item.url}
+                        discount={item.final_price}
+                        cover={item.images}
+                        available={item.available}
+                        details={`Ref. ${item.id}`}
+                        productId={item.id}
+                      ></SCard>
+                    </div>
+                  ) : (
+                    <SCard
+                      title={item.title}
+                      brand=""
+                      hoverable={true}
+                      price={item.price}
+                      url={item.url}
+                      discount={item.final_price}
+                      cover={item.images}
+                      available={item.available}
+                      details={`Ref. ${item.id}`}
+                      productId={item.id}
+                    ></SCard>
+                  )}
                 </Col>
               ))}
             </Row>
+            <div>{loading && "Loading..."}</div>
+            <div>{error && "Error"}</div>
           </MainContent>
         </Layout>
       )}

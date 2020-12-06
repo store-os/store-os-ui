@@ -12,24 +12,24 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Layout } from "antd";
 
 function App() {
-  const [data, setData] = useState();
-  useEffect(async () => {
+/*   const [data, setData] = useState();
+  useEffect(() => {
     const fetchData = async () => {
       const result = await axios(process.env.REACT_APP_PRODUCTS_URL);
       setData(result.data);
     };
 
     fetchData();
-  }, []);
+  }, []); */
 
   return (
     <Router>
       <div className="App">
         <Layout>
-          <AppHeader data={data}/>
+          <AppHeader/>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/catalog" component={Catalog}/>
+            <Route exact path="/catalog" component={Catalog} />
             <Route exact path="/blog" component={Blog} />
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />

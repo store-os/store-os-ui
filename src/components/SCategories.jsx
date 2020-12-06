@@ -40,12 +40,10 @@ const SCategories = ({ data = {}, onCategoriesQuery }) => {
   };
 
   const onCheck = (checkedKeys, info) => {
-    console.log('onCheck', checkedKeys, info);
     let query = "";
     checkedKeys.map(item => {
       query = query + item + '&';
     });
-    console.log('Category query' + query);
     onCategoriesQuery({query});
   };
 

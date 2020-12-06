@@ -21,7 +21,7 @@ const SCard = ({
   title = "",
   shortDescription = "",
   price,
-  url="",
+  url = "",
   brand = "",
   discount,
   hoverable = false,
@@ -56,7 +56,7 @@ const SCard = ({
       >
         <Brand>{brand}</Brand>
         <Link className="title__link-product" to={`product/${productId}`}>
-          <Meta title={title} description={shortDescription}/>
+          <Meta title={title} description={shortDescription} />
         </Link>
 
         <Details>{details}</Details>

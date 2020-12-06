@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Slider } from "antd";
 
-const SPrice = ({ disabled = false, minValue, maxValue, range = false, onPriceQuery }) => {
-  let maxRound = '1';
+const SPrice = ({
+  disabled = false,
+  minValue,
+  maxValue,
+  range = false,
+  onPriceQuery,
+}) => {
+  let maxRound = "1";
   for (var i = 0; i < maxValue.toString().length; i++) {
-    maxRound = maxRound + '0';
+    maxRound = maxRound + "0";
   }
   maxRound = parseInt(maxRound);
 
   const onPriceChange = (value) => {
-    const query = "from="+value[0]+"&to="+value[1];
-    onPriceQuery({query});
+    const query = "from=" + value[0] + "&to=" + value[1];
+    onPriceQuery({ query });
   };
 
   return (
@@ -18,7 +24,7 @@ const SPrice = ({ disabled = false, minValue, maxValue, range = false, onPriceQu
       max={maxRound}
       min={0}
       range={range}
-      marks={{ 0: '0', [maxRound]: maxRound }}
+      marks={{ 0: "0", [maxRound]: maxRound }}
       defaultValue={[minValue, maxValue]}
       disabled={disabled}
       onAfterChange={onPriceChange}
