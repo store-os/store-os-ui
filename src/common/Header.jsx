@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Layout, Badge, Menu, Dropdown, Space } from "antd";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import mainLogo from "../../src/logo.svg";
 
 const { Header } = Layout;
 
-const AppHeader = ({data}) => {
-
+const AppHeader = ({ data }) => {
   const menu = (
     <Menu>
       <Menu.Item>
@@ -45,6 +43,7 @@ const AppHeader = ({data}) => {
           <img
             src={mainLogo}
             style={{ width: 60, display: "flex", marginRight: 20 }}
+            alt="App logo"
           />
         </Logo>
         <Navigation size="large">
@@ -63,13 +62,13 @@ const AppHeader = ({data}) => {
           <Nav to="/contact">Contact</Nav>
         </Navigation>
         <Action size="middle">
-          <Nav className="site-search">
+          <div className="site-search">
             <i className="mi-search" /> <span>Search</span>
-          </Nav>
-          <Nav className="snipcart-customer-signin">
+          </div>
+          <div className="snipcart-customer-signin">
             <i className="mi-user" />
-          </Nav>
-          <Nav className="snipcart-checkout">
+          </div>
+          <div className="snipcart-checkout">
             <Badge
               count={
                 <span className="snipcart-items-count ant-badge-count"></span>
@@ -78,7 +77,7 @@ const AppHeader = ({data}) => {
             >
               <i className="mi-shopping-cart" />
             </Badge>
-          </Nav>
+          </div>
         </Action>
       </Header>
       <SubHeader />
