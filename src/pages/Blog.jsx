@@ -38,6 +38,7 @@ const Blog = () => {
                 thumbnail={entry.images[0]}
                 title={entry.title}
                 description={entry.description}
+                blogId={entry.id}
               />
             </Col>
           ))}

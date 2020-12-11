@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card } from "antd";
 import { LinkOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const { Meta } = Card;
 
-const SBlog = ({ thumbnail, title, description, link }) => {
+const SBlog = ({ thumbnail, title, description, blogId }) => {
   return (
     <Card
-      cover={<img alt="example" src={thumbnail} />}
+      cover={
+        <Link to={`blog/${blogId}`}>
+          <Thumbnail 
+            alt="example" 
+            src={thumbnail}/>
+        </Link>
+      }
       actions={[<LinkOutlined key="setting" />]}
       bordered={false}
     >
@@ -15,5 +23,12 @@ const SBlog = ({ thumbnail, title, description, link }) => {
     </Card>
   );
 };
+
+const Thumbnail = styled.img`
+  height: 260px;
+  width: 360px;
+  object-fit: contain;
+`;
+
 
 export default SBlog;
