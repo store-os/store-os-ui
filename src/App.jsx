@@ -5,6 +5,7 @@ import Blog from "./pages/Blog.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Product from "./pages/Product.jsx";
+import OneBlog from "./pages/OneBlog.jsx";
 import AppHeader from "./common/Header";
 import React from "react";
 import {Helmet} from "react-helmet";
@@ -40,6 +41,7 @@ function App() {
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/product/:productId" component={Product} />
+            <Route exact path="/blog/:blogId" component={OneBlog} />
           </Switch>
           <footer></footer>
         </Layout>
