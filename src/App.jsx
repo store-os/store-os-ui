@@ -26,7 +26,7 @@ function App() {
     
     <Router>
       <Helmet
-        defaultTitle="StoreOs"
+        defaultTitle={`${process.env.REACT_APP_WEBSITE_NAME}`}
         >
       <script>{`${process.env.REACT_APP_HOTJAR_SCRIPT}`}</script>
       
