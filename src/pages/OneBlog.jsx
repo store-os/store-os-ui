@@ -2,25 +2,29 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import {
+  Avatar,
+  Carousel,
+  Comment, 
+  Tooltip,
   Row,
   Card,
   Typography,
-
+  Col,
   Collapse,
   Tag,
 } from "antd";
 import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
+  LeftCircleFilled,
+  RightCircleFilled,
   TwitterOutlined,
-  YoutubeOutlined,
-  InstagramOutlined,
-  FacebookOutlined,
-  LinkedinOutlined,
+  YoutubeFilled,
+  InstagramFilled,
+  FacebookFilled,
+  LinkedinFilled,
 } from '@ant-design/icons';
 
+const { utcToZonedTime, format } = require('date-fns-tz')
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
@@ -29,6 +33,7 @@ const OneBlog = () => {
   const [data, setData] = useState();
   const [selectedImage, setSelectedImage] = useState();
   const [previousPage, setPreviousPage] = useState();
+  
   const [nextPage, setNextPage] = useState();
   useEffect(async () => {
     const fetchData = async () => {
@@ -42,8 +47,17 @@ const OneBlog = () => {
         setPreviousPage(String(prev))
       }
       var next = parseInt(result.data.id) + 1
+
+      const limitPage = await axios(
+        `${process.env.REACT_APP_BLOG_URL}`
+      );
+      
     
-      setNextPage(String(next))
+      if (next <= limitPage.data.hits){
+        setNextPage(String(next))
+      }
+    
+      
       
     };
 
@@ -54,13 +68,49 @@ const OneBlog = () => {
     <Main>
       {data && (
         <Card>
+
+        {data.images && 
+          <Row>
+              <Carousel>
+                {data.images.map((image) => (
+                  <img src={image} alt=""></img>
+                ))}
+              </Carousel>
+          </Row>
+        }
+
         <Row>
-          
+  
             <Title level={1} style={{ marginTop: "2%" }}>
               {data.title}
             </Title>
-            <div dangerouslySetInnerHTML={{__html:data.content}}></div>
             
+            <Paragraph>
+              {data.author && 
+                <Comment
+                  author={data.author.name}
+                  avatar={
+                    <Avatar
+                      src={data.author.avatar}
+                      alt={data.author.name}
+                    />
+                  }
+                  content={
+                    <p>
+                      {data.author.role}
+                    </p>
+                  }
+                  datetime={ data.date &&
+                    <Tooltip title={format(utcToZonedTime(new Date(data.date),'Europe/Madrid'),'EEEE, dd/MM/yyyy',{ timeZone: 'Europe/Madrid' })}>
+                      <span>{format(utcToZonedTime(new Date(data.date),'Europe/Madrid'),'EEEE, dd/MM/yyyy',{ timeZone: 'Europe/Madrid' })}</span>
+                    </Tooltip>
+                  }
+                />
+              }
+              <div dangerouslySetInnerHTML={{__html:data.content}}></div> 
+
+            </Paragraph>
+
             {data.label.map((tag) => (
               <Tag>{tag}</Tag>
               ))
@@ -68,24 +118,21 @@ const OneBlog = () => {
 
             {data.social.instagram &&
               <a href={data.social.instagram} target="_blank">
-                <Tag icon={<InstagramOutlined />} color="#C13584">
-                Instagram
+                <Tag icon={<InstagramFilled />} color="#C13584">
                 </Tag>
             </a>
             }
 
             {data.social.facebook &&
               <a href={data.social.facebook} target="_blank">
-                <Tag icon={<FacebookOutlined />} color="#3b5999">
-                Facebook
+                <Tag icon={<FacebookFilled />} color="#3b5999">
                 </Tag>
              </a>
             }
 
             {data.social.linkedin &&
               <a href={data.social.linkedin} target="_blank">
-                <Tag icon={<LinkedinOutlined />} color="#55acee">
-                  LinkedIn
+                <Tag icon={<LinkedinFilled />} color="#55acee">
                 </Tag>
             </a>
             }
@@ -93,36 +140,41 @@ const OneBlog = () => {
             {data.social.twitter &&
               <a href={data.social.twitter} target="_blank">
                 <Tag icon={<TwitterOutlined />} color="#55acee">
-                  Twitter
                 </Tag>
             </a>
             }
 
             {data.social.youtube &&
               <a href={data.social.youtube} target="_blank">
-                <Tag icon={<YoutubeOutlined />} color="#55acee">
-                  Twitter
+                <Tag icon={<YoutubeFilled />} color="#55acee">
                 </Tag>
             </a>
             }
         </Row>
         </Card>
       )}
-
+      <Row gutter={[16,16]}>
       {previousPage && 
-        <Link to={`/blog/${previousPage}`}>
-          <Tag icon={<ArrowLeftOutlined />} >
-          Blog previo
+      <Col span={12}>
+        <Left href={`/blog/${previousPage}`}> 
+        <Tag icon={<LeftCircleFilled />} >
           </Tag>
-        </Link>
+          Blog previo
+      </Left>
+      </Col>
       }
+
+
       { nextPage && 
-      <Link to={`/blog/${nextPage}`} >
-        <Tag icon={<ArrowRightOutlined />} >
-        Siguiente blog
-        </Tag>
-      </Link>
+      <Col span={12}>
+      <Right href={`/blog/${nextPage}`}> 
+                Siguiente blog
+                <Tag icon={<RightCircleFilled />} >
+                </Tag>
+            </Right>
+      </Col>
       }
+      </Row>
     </Main>
     
   );
@@ -130,6 +182,16 @@ const OneBlog = () => {
 
 const Main = styled.main`
   padding: 4%;
+`;
+
+const Left = styled.a`
+  float:left;
+  width:100px;
+`;
+
+const Right = styled.a`
+  float:right;
+  width:100px;
 `;
 
 export default OneBlog;
