@@ -2,13 +2,12 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import es from 'date-fns/locale/es'
 import {
   Avatar,
-  Carousel,
   Comment,
   Tooltip,
   Row,
-  Card,
   Typography,
   Col,
   Collapse,
@@ -31,7 +30,7 @@ const { Panel } = Collapse;
 const OneBlog = () => {
   let { blogId } = useParams();
   const [data, setData] = useState();
-  const [selectedImage, setSelectedImage] = useState();
+ 
   const [previousPage, setPreviousPage] = useState();
 
   const [nextPage, setNextPage] = useState();
@@ -39,7 +38,7 @@ const OneBlog = () => {
     const fetchData = async () => {
       const result = await axios(`${process.env.REACT_APP_BLOG_URL}/${blogId}`);
       setData(result.data);
-      setSelectedImage(result.data.images[0]);
+      
       var prev = parseInt(result.data.id) - 1;
       if (prev !== 0) {
         setPreviousPage(String(prev));
@@ -100,17 +99,19 @@ const OneBlog = () => {
                                 "Europe/Madrid"
                               ),
                               "EEEE, dd/MM/yyyy",
-                              { timeZone: "Europe/Madrid" }
+                              { timeZone: "Europe/Madrid",
+                              locale: es }
                             )}
                           >
-                            <span>
+                            <span style={{textTransform: 'capitalize'}}>
                               {format(
                                 utcToZonedTime(
                                   new Date(data.date),
                                   "Europe/Madrid"
                                 ),
                                 "EEEE, dd/MM/yyyy",
-                                { timeZone: "Europe/Madrid" }
+                                { timeZone: "Europe/Madrid" ,
+                                 locale: es }
                               )}
                             </span>
                           </Tooltip>
