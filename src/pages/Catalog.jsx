@@ -6,6 +6,7 @@ import styled from "styled-components";
 import SCategories from "../components/SCategories";
 import SPrice from "../components/SPrice";
 import SSort from "../components/SSort";
+import SAutocomplete from "../components/SAutocomplete";
 import useScrollFilter from "../hooks/useScrollFilter";
 
 const { Sider, Content } = Layout;
@@ -13,7 +14,8 @@ const { Panel } = Collapse;
 
 let queryPrice = "",
   queryCategories = "",
-  querySort = "fieldsort=title.keyword&order=asc";
+  querySort = "fieldsort=title.keyword&order=asc",
+  querySearch = "";
 
 const Catalog = ({ location }) => {
   const [fullQuery, setFullQuery] = useState("");
@@ -77,10 +79,23 @@ const Catalog = ({ location }) => {
     }
   }
 
+  function applyFilterSearch(evt) {
+    querySearch = evt.query;
+    console.log("QUERY SEARCH:",querySearch)
+    if (querySearch!== "") {
+      setFullQuery(`${querySearch}&${queryCategories}&${queryPrice}&${querySort}`);
+      setPageNumber(1);
+    } else {
+      setFullQuery(`${querySearch}`);
+      setPageNumber(1);
+    }
+  }
+
   return (
     <React.Fragment>
       {data && (
         <Layout>
+          
           <Sider
             width="20%"
             theme="light"
@@ -91,6 +106,9 @@ const Catalog = ({ location }) => {
               ghost
               extra={<span>325</span>}
             >
+              <SAutocomplete
+                  onSearchQuery={applyFilterSearch}
+                />
               <Panel header="Categories" key="1">
                 <SCategories
                   onCategoriesQuery={applyFilterCategories}
