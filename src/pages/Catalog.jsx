@@ -21,7 +21,7 @@ const Catalog = ({ location }) => {
   const [fullQuery, setFullQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { data, products, hasMore, loading, error } = useScrollFilter(
+  const { data, products, hasMore, loading, error, autocomplete } = useScrollFilter(
     fullQuery,
     pageNumber
   );
@@ -108,6 +108,7 @@ const Catalog = ({ location }) => {
             >
               <SAutocomplete
                   onSearchQuery={applyFilterSearch}
+                  autocomplete={autocomplete}
                 />
               <Panel header="Categories" key="1">
                 <SCategories

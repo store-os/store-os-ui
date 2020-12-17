@@ -9,7 +9,7 @@ const SPrice = ({
   onPriceQuery,
 }) => {
   let maxRound = "1";
-  if (maxValue !== 'undefined') {
+  if (maxValue !== null) {
     for (var i = 0; i < maxValue.toString().length; i++) {
       maxRound = maxRound + "0";
     }

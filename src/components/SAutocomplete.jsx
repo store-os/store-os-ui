@@ -1,54 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Input, AutoComplete } from "antd";
-import axios from "axios";
 import debounce from 'lodash/debounce';
 
-
-
-function getAutocomplete(query) {
-  const getAsync = async() => {
-    try{
-      return await axios.get(process.env.REACT_APP_AUTOCOMPLETE_URL+"?q="+query)
-    }
-    catch(error){
-      console.error(error)
-    }
+const SAutocomplete = ({ onSearchQuery, autocomplete =[]}) => {
+  const [options, setOptions] = useState([]);
+  const onSelect = (value) => {
+    console.log("onSelect:", value);
   }
 
-  const getResponse = async() => {
-    try {
-      const response = await getAsync() 
-      if (response.data.autocomplete){
-        console.log("Autocomplete",response.data.autocomplete)
-        
-        return response.data.autocomplete
-      }
-    
-    }
-    catch(error){
-      console.error(error)
-    }
-   
-  }
-  
-  getResponse()
-}
+  const onAutocomplete = (value) => {
 
+    if (value !== null)
+    {
+      return value.map((item) => {
 
-const SearchResult = (query) => {
-
-
-  getAutocomplete(query)
-    
-  return new Array(3)
-      .join('.')
-      .split('.')
-      .map((item, idx) => {
-
-        const category = `${query}-${idx}`;
-        
+        const title = `${item.title}`
+        const id = `${item.id}`
+        const image = `${item.image}`
+       
         return {
-          value: category,
+          value: title,
           label: (
             <div
               style={{
@@ -57,29 +28,27 @@ const SearchResult = (query) => {
               }}
             >
               <span>
-                Found {query} on{' '}
+                {title} 
                 <a
-                  href={`https://s.taobao.com/search?q=${query}`}
+                  href={`https://store-ui.alchersan.com/product/${id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {category}
+                  <img src={image} width="20"></img>
                 </a>
               </span>
-              <span>100 results</span>
             </div>
           ),
         };
+        
       });
-};
+    }
 
-const SAutocomplete = ({ onSearchQuery }) => {
-  const [options, setOptions] = useState([]);
-  const onSelect = (value) => {
-    console.log("onSelect:", value);
   }
+
   const onSearch = (value) => {
-    setOptions(value ? SearchResult(value) : []);
+    
+    setOptions(value ? onAutocomplete(autocomplete) : []);
     const query = "q=" + value;
     onSearchQuery({query}) //Search Query
   }
@@ -93,6 +62,7 @@ const SAutocomplete = ({ onSearchQuery }) => {
       options={options}
       onSelect={onSelect}
       onSearch={debounce(onSearch, 300)} // 300 is the required delay
+      onChange={debounce(onSearch, 300)} // To search when you click the autocomplete
     >
       <Input.Search size="large" placeholder="Busca lo que quieras" enterButton />
     </AutoComplete>
