@@ -9,11 +9,13 @@ const SPrice = ({
   onPriceQuery,
 }) => {
   let maxRound = "1";
-  for (var i = 0; i < maxValue.toString().length; i++) {
-    maxRound = maxRound + "0";
+  if (maxValue !== null) {
+    for (var i = 0; i < maxValue.toString().length; i++) {
+      maxRound = maxRound + "0";
+    }
+    maxRound = parseInt(maxRound);
   }
-  maxRound = parseInt(maxRound);
-
+  
   const onPriceChange = (value) => {
     const query = "from=" + value[0] + "&to=" + value[1];
     onPriceQuery({ query });
