@@ -14,11 +14,21 @@ import {
   Collapse,
   Badge,
 } from "antd";
-
+import {useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx"
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
+
 const Product = () => {
+  const { viewport } = useViewport()
+  console.log("VIEWPORT", viewport)
+  if (viewport.device === MOBILE) {
+    console.log("MOBILE")
+  }else if (viewport.device == TABLET) {
+    console.log("TABLET")
+  } else {
+    console.log("DESKTOP")
+  }
   let { productId } = useParams();
   const [data, setData] = useState();
   const [selectedImage, setSelectedImage] = useState();
