@@ -23,11 +23,23 @@ import {
   LinkedinFilled,
 } from "@ant-design/icons";
 
+import {useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx"
+
+
 const { utcToZonedTime, format } = require("date-fns-tz");
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
+
+
+
+
+
 const OneBlog = () => {
+
+  
+  const { viewport } = useViewport()
+
   let { blogId } = useParams();
   const [data, setData] = useState();
  
@@ -56,7 +68,7 @@ const OneBlog = () => {
   }, []);
 
   return (
-    <Main>
+    <Main viewport={viewport}>
       {data && (
         <Row>
           <Col span={6}>
@@ -68,7 +80,7 @@ const OneBlog = () => {
           <Col span={12}>
             {data.images && (
               <Row>
-                <BlogCarousel src={data.images[0]} alt="">
+                <BlogCarousel viewport={viewport} src={data.images[0]} alt="" >
                   {/* {data.images.map((image) => (
                     <img src={image} alt=""></img>
                   ))} */}
@@ -196,11 +208,14 @@ const OneBlog = () => {
 
 const Main = styled.main`
   margin-bottom: 80px;
+  max-width: ${props => props.viewport.device === MOBILE ? "768px"
+              : props.viewport.device === TABLET ? "992px": "1400px"  };
 `;
 
 const BlogCarousel = styled.img`
   width: 100%;
-  height: 300px;
+  height: ${props => props.viewport.device === MOBILE ? "150px"
+                     : props.viewport.device === TABLET ? "35px": "300px"  };
   object-fit: cover;
   object-position: top;
 `;
