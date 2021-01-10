@@ -1,28 +1,27 @@
-
 import React from "react";
+import { Row } from "antd";
+import styled from "styled-components";
+import IntroSection from "../components/Contact/SIntro.jsx";
+import InfoSection from "../components/Contact/SInfo.jsx";
+import FormSection from "../components/Contact/SForm.jsx";
+import MapSection from "../components/Contact/SMap.jsx";
 
-import IntroSection from '../components/SIntro.jsx'
-import InfoSection from '../components/SInfo.jsx'
-import FormSection from '../components/SForm.jsx'
-import MapSection from '../components/SMap.jsx'
-
-const location = {
-  address: 'Comercial Alchersán',
-  lat: 43.3814921,
-  lng: -5.767275,
-}
-
-const Contact = () => {  
-
+const Contact = () => {
   return (
-    <div>
-    <IntroSection />
-    <InfoSection />
-    <FormSection />
-    <MapSection location={location} zoomLevel={17} /> {/* include it here */}
-    </div>
+    <ContactContainer>
+      <IntroSection />
+      <Row>
+        <FormSection />
+        <InfoSection />
+      </Row>
+      <MapSection />
+    </ContactContainer>
   );
 };
 
+const ContactContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 export default Contact;

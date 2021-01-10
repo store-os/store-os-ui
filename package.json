@@ -12,7 +12,6 @@
     "axios": "^0.21.0",
     "date-fns": "^2.16.1",
     "date-fns-tz": "^1.0.12",
-    "google-map-react": "^2.1.9",
     "lodash": "^4.17.20",
     "mono-icons": "^1.2.4",
     "react": "^17.0.1",
