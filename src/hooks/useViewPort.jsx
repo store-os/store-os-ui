@@ -7,7 +7,7 @@ export const DESKTOP = 'DESKTOP'
 
 const getDevice = width => {
   if (width < 768) return MOBILE
-  else if (width < 992) return TABLET
+  else if (width < 1024) return TABLET
   else return DESKTOP
 }
 

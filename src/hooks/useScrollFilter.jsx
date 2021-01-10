@@ -8,6 +8,7 @@ export default function useScrollFilter(query, pageNumber) {
   const [products, setProducts] = useState([]);
   const [hasMore, setHasMore] = useState(false); // For not found
   const [autocomplete, setAutocomplete] = useState([]);
+  let cancel;
 
   useEffect(() => {
     setProducts([]);
@@ -17,23 +18,31 @@ export default function useScrollFilter(query, pageNumber) {
   useEffect(() => {
     setLoading(true);
     setError(false);
-    let cancel;
-    if (query.indexOf('q=')!== -1 ) //Only check autocomplete if the query is added
-    {
-      axios({
-        method: "GET",
-        url: process.env.REACT_APP_AUTOCOMPLETE_URL + "?" + query,
-        cancelToken: new axios.CancelToken((c) => (cancel = c)),
-      })
-        .then((res) => {
-          setAutocomplete(res.data.autocomplete);
-        })
-        .catch((e) => {
-          if (axios.isCancel(e)) return;
-          setError(true);
-        });
+    if (query.indexOf("q=") !== -1) {
+      autocompleteRequest();
     }
-   
+    searchRequest();
+    console.log(query);
+  }, [query, pageNumber]);
+  return { data, loading, error, products, hasMore, autocomplete };
+
+  function autocompleteRequest() {
+    axios({
+      method: "GET",
+      url: process.env.REACT_APP_AUTOCOMPLETE_URL + "?" + query,
+      cancelToken: new axios.CancelToken((c) => (cancel = c)),
+    })
+      .then((res) => {
+        setAutocomplete(res.data.autocomplete);
+      })
+      .catch((e) => {
+        if (axios.isCancel(e)) return;
+        setError(true);
+      });
+    return () => cancel();
+  }
+
+  function searchRequest() {
     axios({
       method: "GET",
       url: process.env.REACT_APP_PRODUCTS_URL + "?" + query,
@@ -43,7 +52,11 @@ export default function useScrollFilter(query, pageNumber) {
       .then((res) => {
         setData(res.data);
         setProducts((prevProducts) => {
-          setHasMore(prevProducts.length + res.data.products.length === res.data.hits ? false : true);
+          setHasMore(
+            prevProducts.length + res.data.products.length === res.data.hits
+              ? false
+              : true
+          );
           return [...new Set([...prevProducts, ...res.data.products])];
         });
         setLoading(false);
@@ -53,6 +66,5 @@ export default function useScrollFilter(query, pageNumber) {
         setError(true);
       });
     return () => cancel();
-  }, [query, pageNumber]);
-  return { data, loading, error, products, hasMore, autocomplete };
+  }
 }

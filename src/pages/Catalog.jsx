@@ -14,17 +14,21 @@ const { Panel } = Collapse;
 
 let queryPrice = "",
   queryCategories = "",
-  querySort = "fieldsort=title.keyword&order=asc",
+  querySort = "&fieldsort=title.keyword&order=asc",
   querySearch = "";
 
 const Catalog = ({ location }) => {
   const [fullQuery, setFullQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { data, products, hasMore, loading, error, autocomplete } = useScrollFilter(
-    fullQuery,
-    pageNumber
-  );
+  const {
+    data,
+    products,
+    hasMore,
+    loading,
+    error,
+    autocomplete,
+  } = useScrollFilter(fullQuery, pageNumber);
 
   const observer = useRef();
   const lastProductRef = useCallback(
@@ -47,31 +51,31 @@ const Catalog = ({ location }) => {
   );
 
   function applyFilterCategories(evt) {
-    queryCategories = evt.query;
+    queryCategories = "&" + evt.query;
     if (queryCategories !== "") {
-      setFullQuery(`${queryCategories}&${queryPrice}&${querySort}`);
+      setFullQuery(`${querySearch}${queryCategories}${queryPrice}${querySort}`);
       setPageNumber(1);
     } else {
-      setFullQuery(`${queryPrice}&${querySort}`);
+      setFullQuery(`${queryPrice}${querySort}`);
       setPageNumber(1);
     }
   }
 
   function applyFilterPrice(evt) {
-    queryPrice = evt.query;
+    queryPrice = "&" + evt.query;
     if (queryPrice !== "") {
-      setFullQuery(`${queryPrice}&${queryCategories}&${querySort}`);
+      setFullQuery(`${querySearch}${queryCategories}${queryPrice}${querySort}`);
       setPageNumber(1);
     } else {
-      setFullQuery(`${queryCategories}&${querySort}`);
+      setFullQuery(`${queryCategories}${querySort}`);
       setPageNumber(1);
     }
   }
 
   function applyFilterSort(evt) {
-    querySort = evt.query;
+    querySort = "&" + evt.query;
     if (querySort !== "") {
-      setFullQuery(`${queryCategories}&${queryPrice}&${querySort}`);
+      setFullQuery(`${querySearch}${queryCategories}${queryPrice}${querySort}`);
       setPageNumber(1);
     } else {
       setFullQuery(`${queryCategories}`);
@@ -81,9 +85,9 @@ const Catalog = ({ location }) => {
 
   function applyFilterSearch(evt) {
     querySearch = evt.query;
-    console.log("QUERY SEARCH:",querySearch)
-    if (querySearch!== "") {
-      setFullQuery(`${querySearch}&${queryCategories}&${queryPrice}&${querySort}`);
+    console.log("QUERY SEARCH:", querySearch);
+    if (querySearch !== "") {
+      setFullQuery(`${querySearch}${queryCategories}${queryPrice}${querySort}`);
       setPageNumber(1);
     } else {
       setFullQuery(`${querySearch}`);
@@ -95,7 +99,6 @@ const Catalog = ({ location }) => {
     <React.Fragment>
       {data && (
         <Layout>
-          
           <Sider
             width="20%"
             theme="light"
@@ -106,10 +109,6 @@ const Catalog = ({ location }) => {
               ghost
               extra={<span>325</span>}
             >
-              <SAutocomplete
-                  onSearchQuery={applyFilterSearch}
-                  autocomplete={autocomplete}
-                />
               <Panel header="Categories" key="1">
                 <SCategories
                   onCategoriesQuery={applyFilterCategories}
@@ -128,6 +127,17 @@ const Catalog = ({ location }) => {
           </Sider>
 
           <MainContent>
+            <Row
+              gutter={[48, 48]}
+              style={{
+                margin: "8px 0 48px 0",
+              }}
+            >
+              <SAutocomplete
+                onSearchQuery={applyFilterSearch}
+                autocomplete={autocomplete}
+              />
+            </Row>
             <Row
               gutter={[48, 48]}
               style={{
