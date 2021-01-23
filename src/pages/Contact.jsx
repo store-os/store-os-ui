@@ -10,7 +10,7 @@ const Contact = () => {
   return (
     <ContactContainer>
       <IntroSection />
-      <Row>
+      <Row style={{ width: "100%" }}>
         <FormSection />
         <InfoSection />
       </Row>

@@ -40,10 +40,8 @@ const IntroContainer = styled.div`
 
 const IntroImage = styled(Image)`
   height: 340px;
-  img {
-    height: 100%;
-    object-fit: cover;
-  }
+  object-fit: cover;
+  object-position: top;
 `;
 
 const Section = styled.div`
