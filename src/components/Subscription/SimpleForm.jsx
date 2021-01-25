@@ -1,8 +1,9 @@
 import React from "react";
 import SMailchimp from "./SMailchimp.jsx"
+import {MailchimpData} from "../../data/Mailchimp.jsx"
 
 // a basic form
-const SimpleForm = ({ status, message, className, style, onSubmitted }) => {
+const SimpleForm = ({ status, message, className, style, onSubmitted, data }) => {
  
   return (
     <div className={className} style={style}>
@@ -22,6 +23,7 @@ const SimpleForm = ({ status, message, className, style, onSubmitted }) => {
       <SMailchimp status={status}
       message={message}
       onSubmitted={onSubmitted}
+      data={MailchimpData}
       />
     </div>
   );
