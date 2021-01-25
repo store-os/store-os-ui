@@ -1,6 +1,8 @@
 import React from "react";
 import { Form, Input, Button, Col } from "antd";
 
+
+
 const layout = {
   labelCol: {
     span: 8,
@@ -21,7 +23,7 @@ const validateMessages = {
   },
 };
 
-const SMailchimp = ({ status, message, className, style, onSubmitted }) => {
+const SMailchimp = ({ status, message, className, style, onSubmitted,data }) => {
    
     let input;
    const [form] = Form.useForm();
@@ -56,12 +58,12 @@ const SMailchimp = ({ status, message, className, style, onSubmitted }) => {
             },
           ]}
         >
-          <Input placeholder="Únete a nuestra newsletter. Introduce tu email" />
+          <Input placeholder={data.placeholder} />
         </Form.Item>
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit" onClick={submit}>
-            Submit
+            {data.submit}
           </Button>
         </Form.Item>
       </Form>

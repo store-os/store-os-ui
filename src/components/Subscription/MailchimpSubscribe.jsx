@@ -4,6 +4,8 @@ import jsonp from "jsonp";
 import toQueryString from "to-querystring";
 import SimpleForm from "./SimpleForm.jsx";
 
+
+
 const getAjaxUrl = url => url.replace("/post?", "/post-json?");
 
 class MailchimpSubscribe extends React.Component {
