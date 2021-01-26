@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState }  from "react";
 import { Form, Input, Button, Col, Typography } from "antd";
-
+import axios from 'axios'
 const { Title } = Typography;
 
 const layout = {
@@ -20,9 +20,36 @@ const validateMessages = {
 };
 
 const SForm = ({ data }) => {
+
+  const [status, setStatus] = useState({
+    info: { error: false, msg: null }
+  })
+
   const onFinish = (values) => {
     console.log(values);
+    axios({
+      method: 'POST',
+      url: data.formspree,
+      data: values
+    })
+      .then(response => {
+        setStatus({
+         
+          info: { error: false, msg: data.success }
+        })
+       
+        
+      })
+      .catch(error => {
+        setStatus({
+         
+          info: { error: true, msg: error.response.data.error }
+        })
+        
+        
+      })
   };
+
   return (
     <Col span={10} offset={2}>
       {data.title !== "" && <Title level={3}>{data.title}</Title>}
@@ -59,7 +86,7 @@ const SForm = ({ data }) => {
         </Form.Item>
 
         <Form.Item
-          name={["user", "introduction"]}
+          name={["user", "message"]}
           label={data.message.label}
           rules={[
             {
@@ -75,6 +102,10 @@ const SForm = ({ data }) => {
           </Button>
         </Form.Item>
       </Form>
+      {status.info.error && (
+        <div className="error">Error: {status.info.msg}</div>
+      )}
+      {!status.info.error && status.info.msg && <p>{status.info.msg}</p>}
     </Col>
   );
 };
