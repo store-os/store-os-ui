@@ -24,7 +24,9 @@ export const dataForm = {
     "label": "Mensaje",
     "placeholder": "Qué duda tienes?"
   },
-  "submit": "Enviar"
+  "submit": "Enviar",
+  "formspree": "https://formspree.io/f/xdopbjkw",
+  "success": "Gracias, tu mensaje ha sido enviado"
 }
 
 // Form
