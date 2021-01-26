@@ -13,6 +13,7 @@ const openNotification = (productName) => {
       </div>
     ),
     icon: <SmileOutlined style={{ color: "#108ee9" }} />,
+    top: 84
   });
 };
 
