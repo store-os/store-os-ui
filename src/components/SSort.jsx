@@ -20,6 +20,7 @@ const SSort = ({ onSortQuery }) => {
         query = "fieldsort=final_price&order=desc";
         break;
       default:
+        query = "fieldsort=title.keyword&order=asc";
     }
     onSortQuery({ query });
   };

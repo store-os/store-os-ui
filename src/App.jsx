@@ -1,5 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import axios from "axios";
 import Home from "./pages/Home.jsx";
 import Catalog from "./pages/Catalog.jsx";
@@ -64,22 +65,28 @@ const App = () => {
       <div className="App">
         <Layout>
           <AppHeader data={data} searchClick={toggleVisibility} />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/catalog" component={Catalog} />
-            <Route exact path="/blog" component={Blog} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/contact" component={Contact} />
-            <Route exact path="/product/:productId" component={Product} />
-            <Route exact path="/blog/:blogId" component={OneBlog} />
-          </Switch>
-          <SBackTop />
+          <AppMain>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/catalog" component={Catalog} />
+              <Route exact path="/blog" component={Blog} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/contact" component={Contact} />
+              <Route exact path="/product/:productId" component={Product} />
+              <Route exact path="/blog/:blogId" component={OneBlog} />
+            </Switch>
+          </AppMain>
           <AppFooter data={data} maxColumnsPerRow={4} columns={FooterData} />
+          <SBackTop />
         </Layout>
         <Search visibility={drawerVisible} searchClose={toggleVisibility} />
       </div>
     </Router>
   );
 };
+
+const AppMain = styled.main`
+  min-height: 80vh;
+`;
 
 export default App;

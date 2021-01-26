@@ -3,6 +3,7 @@ import { Button, Card } from "antd";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import SCartNoticiation from "../components/SCartNotification";
 
 const { Meta } = Card;
 
@@ -82,6 +83,7 @@ const SCard = ({
               data-item-description={shortDescription}
               data-item-image={cover[0]}
               data-item-name={title}
+              onClick={() => SCartNoticiation(title)}
             >
               Add to cart
             </Button>

@@ -162,7 +162,7 @@ const Catalog = ({ location }) => {
                     key={index}
                   >
                     {products.length === index + 1 ? (
-                      <Col key={item.id} span={6}>
+                      <Col key={item.id} xs={24} sm={12} xl={8} xxl={6}>
                         <div ref={lastProductRef}>
                           <SCard
                             title={item.title}
@@ -179,7 +179,7 @@ const Catalog = ({ location }) => {
                         </div>
                       </Col>
                     ) : (
-                      <Col key={item.id} span={6}>
+                      <Col key={item.id} xs={24} sm={12} xl={8} xxl={6}>
                         <SCard
                           title={item.title}
                           brand=""

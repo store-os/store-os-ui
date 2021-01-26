@@ -15,6 +15,7 @@ import {
   Badge,
 } from "antd";
 import { useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx";
+import SCartNoticiation from "../components/SCartNotification";
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
@@ -132,6 +133,7 @@ const Product = () => {
                 data-item-description={data.shortDescription}
                 data-item-image={data.images[0]}
                 data-item-name={data.title}
+                onClick={() => SCartNoticiation(data.title)}
               >
                 Add to cart
               </Button>
