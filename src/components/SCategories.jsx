@@ -10,7 +10,9 @@ const SCategories = ({ data = {}, onCategoriesQuery }) => {
   const fetchData = async () => {
     let treeCategories = [];
     {
-      data && data.aggregations && data.aggregations.categories.buckets &&
+      data &&
+        data.aggregations &&
+        data.aggregations.categories.buckets &&
         data.aggregations.categories.buckets.map((item, i) => {
           let children = [];
           item.subcategories &&
@@ -20,12 +22,12 @@ const SCategories = ({ data = {}, onCategoriesQuery }) => {
                 sub.subsubcategories.buckets.map((subsub, k) => {
                   subchildren.push({
                     title: subsub.key,
-                    key: `subsubcategory=${subsub.key}`,
+                    key: `category=${item.key}&subcategory=${sub.key}&subsubcategory=${subsub.key}`,
                   });
                 });
               children.push({
                 title: sub.key,
-                key: `subcategory=${sub.key}`,
+                key: `category=${item.key}&subcategory=${sub.key}`,
                 children: subchildren,
               });
             });
@@ -37,14 +39,16 @@ const SCategories = ({ data = {}, onCategoriesQuery }) => {
         });
       setTreeData(treeCategories);
     }
+    console.log(treeData);
   };
 
   const onCheck = (checkedKeys, info) => {
     let query = "";
-    checkedKeys.map(item => {
-      query = query + item + '&';
+    console.log(checkedKeys);
+    checkedKeys.map((item) => {
+      query = query + item + "&";
     });
-    onCategoriesQuery({query});
+    onCategoriesQuery({ query });
   };
 
   useEffect(() => {
@@ -54,8 +58,8 @@ const SCategories = ({ data = {}, onCategoriesQuery }) => {
   return treeData ? (
     <Tree checkable treeData={treeData} onCheck={onCheck} />
   ) : (
-      <p>Rendering...</p>
-    );
+    <p>Rendering...</p>
+  );
 };
 
 const CategoriesContainer = styled.div`

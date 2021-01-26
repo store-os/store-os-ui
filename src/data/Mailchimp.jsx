@@ -1,5 +1,5 @@
 
 export const MailchimpData = {
-    "placeholder": "Subscríbete a nuestro newsletter!",
+    "placeholder": "Introduce tu email",
     "submit": "Subscribirse!"
 };

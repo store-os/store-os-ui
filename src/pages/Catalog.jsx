@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useRef } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import SCard from "../components/SCard";
-import { Row, Col, Layout, Collapse } from "antd";
+import { Row, Col, Layout, Collapse, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import SCategories from "../components/SCategories";
 import SPrice from "../components/SPrice";
@@ -11,6 +12,7 @@ import useScrollFilter from "../hooks/useScrollFilter";
 
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 let queryPrice = "",
   queryCategories = "",
@@ -196,7 +198,9 @@ const Catalog = ({ location }) => {
                 ))}
               </TransitionGroupCatalog>
             </Row>
-            <div>{loading && "Loading..."}</div>
+            <div>
+              {loading && <Spin tip="Loading..." indicator={antIcon} />}
+            </div>
             <div>{error && "Error"}</div>
           </MainContent>
         </Layout>

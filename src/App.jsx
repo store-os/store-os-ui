@@ -1,4 +1,6 @@
 import "./App.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Home from "./pages/Home.jsx";
 import Catalog from "./pages/Catalog.jsx";
 import Blog from "./pages/Blog.jsx";
@@ -6,37 +8,62 @@ import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import Product from "./pages/Product.jsx";
 import OneBlog from "./pages/OneBlog.jsx";
-import SBackTop from "./components/SBackTop.jsx"
+import SBackTop from "./components/SBackTop.jsx";
 import AppHeader from "./common/Header";
 import AppFooter from "./common/Footer";
+import Search from "./components/SSearch";
 import React from "react";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout, BackTop } from "antd";
-import TagManager from 'react-gtm-module'
+import TagManager from "react-gtm-module";
 
-import {FooterData} from "./data/Footer.jsx"
+import { FooterData } from "./data/Footer.jsx";
 
 const tagManagerArgs = {
-    gtmId: process.env.REACT_APP_ANALYTICS_SCRIPT
-}
+  gtmId: process.env.REACT_APP_ANALYTICS_SCRIPT,
+};
 
-TagManager.initialize(tagManagerArgs)
+TagManager.initialize(tagManagerArgs);
 
-function App() {
+const App = () => {
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [data, setData] = useState();
+  const [error, setError] = useState(false);
+  let cancel;
+
+  function initialRequest() {
+    axios({
+      method: "GET",
+      url: process.env.REACT_APP_PRODUCTS_URL,
+      cancelToken: new axios.CancelToken((c) => (cancel = c)),
+    })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((e) => {
+        if (axios.isCancel(e)) return;
+        setError(true);
+      });
+    return () => cancel();
+  }
+
+  const toggleVisibility = () => {
+    setDrawerVisible(!drawerVisible);
+  };
+
+  useEffect(() => {
+    initialRequest();
+  }, []);
 
   return (
-    
     <Router>
-      <Helmet
-        defaultTitle={`${process.env.REACT_APP_WEBSITE_NAME}`}
-        >
-      <script>{`${process.env.REACT_APP_HOTJAR_SCRIPT}`}</script>
-      
+      <Helmet defaultTitle={`${process.env.REACT_APP_WEBSITE_NAME}`}>
+        <script>{`${process.env.REACT_APP_HOTJAR_SCRIPT}`}</script>
       </Helmet>
       <div className="App">
         <Layout>
-          <AppHeader/>
+          <AppHeader data={data} searchClick={toggleVisibility} />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/catalog" component={Catalog} />
@@ -46,17 +73,13 @@ function App() {
             <Route exact path="/product/:productId" component={Product} />
             <Route exact path="/blog/:blogId" component={OneBlog} />
           </Switch>
-          <SBackTop/>
-          <AppFooter
-          maxColumnsPerRow={4}
-          columns={FooterData}
-          />
+          <SBackTop />
+          <AppFooter data={data} maxColumnsPerRow={4} columns={FooterData} />
         </Layout>
-        
+        <Search visibility={drawerVisible} searchClose={toggleVisibility} />
       </div>
     </Router>
   );
-}
-
+};
 
 export default App;

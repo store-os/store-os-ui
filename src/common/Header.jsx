@@ -2,21 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { Layout, Badge, Menu, Dropdown, Space } from "antd";
 import { Link } from "react-router-dom";
-import mainLogo from "../../src/logo.svg";
+import mainLogo from "../../src/logo.png";
 
 const { Header } = Layout;
 
-const AppHeader = ({ data }) => {
+const AppHeader = ({ data, searchClick }) => {
   const menu = (
     <Menu>
-      <Menu.Item>
+      <Menu.Item key={0}>
         <a href={`${window.location.origin}/catalog`}>Todos los productos</a>
       </Menu.Item>
       {data &&
         data.aggregations.categories.buckets &&
-        data.aggregations.categories.buckets.map((category) => {
+        data.aggregations.categories.buckets.map((category, i) => {
           return (
-            <Menu.Item>
+            <Menu.Item key={i + 1}>
               <a
                 href={`${window.location.origin}/catalog?category=${category.key}`}
               >
@@ -42,7 +42,7 @@ const AppHeader = ({ data }) => {
         <Logo>
           <img
             src={mainLogo}
-            style={{ width: 60, display: "flex", marginRight: 20 }}
+            style={{ width: 140, display: "flex", marginRight: 48 }}
             alt="App logo"
           />
         </Logo>
@@ -62,7 +62,7 @@ const AppHeader = ({ data }) => {
           <Nav to="/contact">Contact</Nav>
         </Navigation>
         <Action size="middle">
-          <div className="site-search">
+          <div className="site-search" onClick={() => searchClick()}>
             <i className="mi-search" /> <span>Search</span>
           </div>
           <div className="snipcart-customer-signin">
@@ -111,6 +111,7 @@ const Action = styled(Space)`
   .site-search {
     display: flex;
     align-items: center;
+    cursor: pointer;
     span {
       color: black;
       margin: 0 8px;

@@ -1,14 +1,12 @@
 import React from "react";
 import { Form, Input, Button, Col } from "antd";
 
-
-
 const layout = {
   labelCol: {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 24,
   },
 };
 
@@ -23,51 +21,60 @@ const validateMessages = {
   },
 };
 
-const SMailchimp = ({ status, message, className, style, onSubmitted,data }) => {
-   
-    let input;
-   const [form] = Form.useForm();
-   const submit = () =>
+const SMailchimp = ({
+  status,
+  message,
+  className,
+  style,
+  onSubmitted,
+  data,
+}) => {
+  let input;
+  const [form] = Form.useForm();
+  const submit = () =>
     form.item &&
     form.item.value.indexOf("@") > -1 &&
     onSubmitted({
-      EMAIL: form.item.value
+      EMAIL: form.item.value,
     });
-   
 
   const onFinish = (values) => {
     console.log(values);
-    onSubmitted({EMAIL:values.email})
+    onSubmitted({ EMAIL: values.email });
   };
 
   return (
-    <Col span={200} offset={0}>
-      <Form form={form}
-        {...layout}
-        name="nest-messages"
-        onFinish={onFinish}
-        validateMessages={validateMessages}
-        style={{ width: "100%" }}
+    <Form
+      form={form}
+      {...layout}
+      name="nest-messages"
+      onFinish={onFinish}
+      validateMessages={validateMessages}
+      style={{ width: "100%" }}
+    >
+      <Form.Item
+        name="email"
+        rules={[
+          {
+            type: "email",
+            required: true,
+          },
+        ]}
       >
-        <Form.Item
-        name = "email"
-          rules={[
-            {
-              type: "email",
-              required: true,
-            },
-          ]}
-        >
-          <Input placeholder={data.placeholder} />
-        </Form.Item>
+        <Input placeholder={data.placeholder} />
+      </Form.Item>
 
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
-          <Button type="primary" htmlType="submit" onClick={submit}>
-            {data.submit}
-          </Button>
-        </Form.Item>
-      </Form>
-    </Col>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol }}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={submit}
+          style={{ width: "100%" }}
+        >
+          {data.submit}
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
