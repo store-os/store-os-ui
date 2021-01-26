@@ -14,20 +14,19 @@ import {
   Collapse,
   Badge,
 } from "antd";
-import {useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx"
+import { useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx";
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
-
 const Product = () => {
-  const { viewport } = useViewport()
-  console.log("VIEWPORT", viewport)
+  const { viewport } = useViewport();
+  console.log("VIEWPORT", viewport);
   if (viewport.device === MOBILE) {
-    console.log("MOBILE")
-  }else if (viewport.device == TABLET) {
-    console.log("TABLET")
+    console.log("MOBILE");
+  } else if (viewport.device === TABLET) {
+    console.log("TABLET");
   } else {
-    console.log("DESKTOP")
+    console.log("DESKTOP");
   }
   let { productId } = useParams();
   const [data, setData] = useState();
@@ -51,7 +50,11 @@ const Product = () => {
           <Col span={14}>
             <Carousel>
               {data.images.map((image) => (
-                <img src={image} onClick={() => setSelectedImage(image)}></img>
+                <img
+                  src={image}
+                  alt="Blog entry cover"
+                  onClick={() => setSelectedImage(image)}
+                ></img>
               ))}
             </Carousel>
           </Col>
@@ -136,7 +139,10 @@ const Product = () => {
 
             <Divider />
 
-            <div className="ant-descriptions-title" style={{ marginBottom: 20 }}>
+            <div
+              className="ant-descriptions-title"
+              style={{ marginBottom: 20 }}
+            >
               Características
             </div>
 
@@ -156,7 +162,10 @@ const Product = () => {
 
             <Divider />
 
-            <div className="ant-descriptions-title" style={{ marginBottom: 20 }}>
+            <div
+              className="ant-descriptions-title"
+              style={{ marginBottom: 20 }}
+            >
               Equipamiento
             </div>
 
@@ -203,29 +212,6 @@ const Product = () => {
 
 const Main = styled.main`
   padding: 4%;
-`;
-
-const SecondaryImages = styled.div`
-  height: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  overflow-y: auto;
-  img {
-    width: 48%;
-    margin-bottom: 12%;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
-
-const MainImage = styled.img`
-  width: 84%;
-  height: 64%;
-  padding-top: 2%;
-  object-fit: contain;
 `;
 
 const ValueContainer = styled.div`

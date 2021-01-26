@@ -13,13 +13,9 @@ import {
 
 const { Title } = Typography;
 
-
-const SInfo = ({data}) => (
+const SInfo = ({ data }) => (
   <Col span={10} offset={2}>
-    { 
-      data.title!= "" && 
-      <Title level={3}>{data.title}</Title>
-    }
+    {data.title !== "" && <Title level={3}>{data.title}</Title>}
     <div className="info-details-container">
       {data.social.address && (
         <p>
@@ -39,7 +35,11 @@ const SInfo = ({data}) => (
 
       {data.social.mail && (
         <p>
-          <a href={"mailto:" + data.social.mail} target="_blank" rel="noreferrer">
+          <a
+            href={"mailto:" + data.social.mail}
+            target="_blank"
+            rel="noreferrer"
+          >
             <MailFilled /> {data.social.mail}
           </a>
         </p>

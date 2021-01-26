@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SBlog from "../components/SBlog";
 import { Row, Col } from "antd";
-import {blogContent} from "../data/Blog.jsx"
+import { blogContent } from "../data/Blog.jsx";
 
 const Blog = () => {
   const [data, setData] = useState();
@@ -18,18 +18,14 @@ const Blog = () => {
     <React.Fragment>
       <Row style={{ height: 200, backgroundColor: "#131313" }}>
         <Col span={24} style={{ display: "flex", flexDirection: "column" }}>
-          {blogContent.header!= "" && 
+          {blogContent.header !== "" && (
             <h1 style={{ color: "white", fontSize: 48, marginBottom: 8 }}>
-            {blogContent.header}
-          </h1>
-          }
-          {" "}
-          {blogContent.paragraph!= "" && 
-            <p style={{ color: "white" }}>
-            {blogContent.paragraph}
-           </p>
-          }
-          
+              {blogContent.header}
+            </h1>
+          )}{" "}
+          {blogContent.paragraph !== "" && (
+            <p style={{ color: "white" }}>{blogContent.paragraph}</p>
+          )}
         </Col>
       </Row>
       <h2 style={{ margin: "20px 12%", fontSize: 32 }}>Blog</h2>

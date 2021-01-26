@@ -8,7 +8,7 @@ const SIntro = ({
   data
 }) => (
   <IntroContainer>
-    { data.introSrc != "" && (
+    { data.introSrc !== "" && (
       <IntroImage
       width={data.introWidth}
       src={data.introSrc}
@@ -19,7 +19,7 @@ const SIntro = ({
       <Row> 
         <Col span={12}>
         {
-          data.introTitle != "" && (
+          data.introTitle !== "" && (
             <Title>
               <TitleBorder>{data.introTitle}</TitleBorder>
             </Title>
@@ -28,14 +28,14 @@ const SIntro = ({
         </Col>
         <Col span={12}>
         {
-        data.introHeading != "" && (
+        data.introHeading !== "" && (
           <Title level={2}>
             {data.introHeading}
           </Title>
         ) 
         }
         {
-          data.introParagraph != "" && (
+          data.introParagraph !== "" && (
             <Paragraph>
               {data.introParagraph}
           </Paragraph>

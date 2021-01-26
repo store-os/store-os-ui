@@ -11,7 +11,7 @@ const ServicesSection = ({
   } ) => {
   return (
     <React.Fragment>
-      { data.title != "" && (
+      { data.title !== "" && (
         <Title level={2}>{data.title}</Title>
       )
       }
@@ -22,13 +22,13 @@ const ServicesSection = ({
             return (
               <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
                 <Space direction="vertical" size="middle">
-                  { service.image != "" &&
+                  { service.image !== "" &&
                   <ServiceImage src={service.image} key={index} />
                   }
-                  { service.title != "" && 
+                  { service.title !== "" && 
                   <Title level={3}>{service.title}</Title>
                   }
-                  { service.description != "" && 
+                  { service.description !== "" && 
                   <Paragraph>{service.description}</Paragraph>
                   }
                 </Space>

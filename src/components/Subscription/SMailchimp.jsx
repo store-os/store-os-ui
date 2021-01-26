@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Col } from "antd";
+import { Form, Input, Button } from "antd";
 
 const layout = {
   labelCol: {
@@ -29,7 +29,6 @@ const SMailchimp = ({
   onSubmitted,
   data,
 }) => {
-  let input;
   const [form] = Form.useForm();
   const submit = () =>
     form.item &&

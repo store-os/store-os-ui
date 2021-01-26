@@ -15,7 +15,7 @@ import Search from "./components/SSearch";
 import React from "react";
 import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Layout, BackTop } from "antd";
+import { Layout } from "antd";
 import TagManager from "react-gtm-module";
 
 import { FooterData } from "./data/Footer.jsx";

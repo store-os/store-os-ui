@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Layout } from "antd";
 import Column from "./Column.jsx";
 
 const prefixCls = "rc-footer";

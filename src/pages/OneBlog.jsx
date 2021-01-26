@@ -2,17 +2,8 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import es from 'date-fns/locale/es'
-import {
-  Avatar,
-  Comment,
-  Tooltip,
-  Row,
-  Typography,
-  Col,
-  Collapse,
-  Tag,
-} from "antd";
+import es from "date-fns/locale/es";
+import { Avatar, Comment, Tooltip, Row, Typography, Col, Tag } from "antd";
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
@@ -23,26 +14,17 @@ import {
   LinkedinFilled,
 } from "@ant-design/icons";
 
-import {useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx"
-
+import { useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx";
 
 const { utcToZonedTime, format } = require("date-fns-tz");
 const { Title, Paragraph } = Typography;
-const { Panel } = Collapse;
-
-
-
-
-
 
 const OneBlog = () => {
-
-  
-  const { viewport } = useViewport()
+  const { viewport } = useViewport();
 
   let { blogId } = useParams();
   const [data, setData] = useState();
- 
+
   const [previousPage, setPreviousPage] = useState();
 
   const [nextPage, setNextPage] = useState();
@@ -50,7 +32,7 @@ const OneBlog = () => {
     const fetchData = async () => {
       const result = await axios(`${process.env.REACT_APP_BLOG_URL}/${blogId}`);
       setData(result.data);
-      
+
       var prev = parseInt(result.data.id) - 1;
       if (prev !== 0) {
         setPreviousPage(String(prev));
@@ -80,7 +62,7 @@ const OneBlog = () => {
           <Col span={12}>
             {data.images && (
               <Row>
-                <BlogCarousel viewport={viewport} src={data.images[0]} alt="" >
+                <BlogCarousel viewport={viewport} src={data.images[0]} alt="">
                   {/* {data.images.map((image) => (
                     <img src={image} alt=""></img>
                   ))} */}
@@ -111,19 +93,17 @@ const OneBlog = () => {
                                 "Europe/Madrid"
                               ),
                               "EEEE, dd/MM/yyyy",
-                              { timeZone: "Europe/Madrid",
-                              locale: es }
+                              { timeZone: "Europe/Madrid", locale: es }
                             )}
                           >
-                            <span style={{textTransform: 'capitalize'}}>
+                            <span style={{ textTransform: "capitalize" }}>
                               {format(
                                 utcToZonedTime(
                                   new Date(data.date),
                                   "Europe/Madrid"
                                 ),
                                 "EEEE, dd/MM/yyyy",
-                                { timeZone: "Europe/Madrid" ,
-                                 locale: es }
+                                { timeZone: "Europe/Madrid", locale: es }
                               )}
                             </span>
                           </Tooltip>
@@ -208,14 +188,22 @@ const OneBlog = () => {
 
 const Main = styled.main`
   margin-bottom: 80px;
-  max-width: ${props => props.viewport.device === MOBILE ? "768px"
-              : props.viewport.device === TABLET ? "992px": "1400px"  };
+  max-width: ${(props) =>
+    props.viewport.device === MOBILE
+      ? "768px"
+      : props.viewport.device === TABLET
+      ? "992px"
+      : "1400px"};
 `;
 
 const BlogCarousel = styled.img`
   width: 100%;
-  height: ${props => props.viewport.device === MOBILE ? "150px"
-                     : props.viewport.device === TABLET ? "35px": "300px"  };
+  height: ${(props) =>
+    props.viewport.device === MOBILE
+      ? "150px"
+      : props.viewport.device === TABLET
+      ? "35px"
+      : "300px"};
   object-fit: cover;
   object-position: top;
 `;

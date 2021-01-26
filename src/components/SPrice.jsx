@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Slider } from "antd";
 
 const SPrice = ({
@@ -15,7 +15,7 @@ const SPrice = ({
     }
     maxRound = parseInt(maxRound);
   }
-  
+
   const onPriceChange = (value) => {
     const query = "from=" + value[0] + "&to=" + value[1];
     onPriceQuery({ query });

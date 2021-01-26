@@ -4,7 +4,6 @@ import styled from "styled-components";
 import IntroSection from "../components/SIntro.jsx";
 import ServicesSection from "../components/SServices.jsx";
 import FormSection from "../components/Contact/SForm.jsx";
-import MapSection from "../components/Contact/SMap.jsx";
 
 import {DataAboutIntro, AboutServices, AboutTeam, DataAboutForm } from "../data/AboutUs.jsx"
 

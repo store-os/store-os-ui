@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Select } from "antd";
 
 const { Option } = Select;
@@ -19,6 +19,7 @@ const SSort = ({ onSortQuery }) => {
       case "priceDesc":
         query = "fieldsort=final_price&order=desc";
         break;
+      default:
     }
     onSortQuery({ query });
   };

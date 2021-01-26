@@ -33,7 +33,7 @@ const SAutocomplete = ({ onSearchQuery, autocomplete = [] }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={image} width="20" alt="product image"></img>
+                  <img src={image} width="20" alt="Product thumbnail"></img>
                 </a>
               </span>
             </div>

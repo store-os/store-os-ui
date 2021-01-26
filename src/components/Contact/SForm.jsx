@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Button, Row, Col, Typography } from "antd";
+import { Form, Input, Button, Col, Typography } from "antd";
 
 const { Title } = Typography;
 
@@ -14,24 +14,19 @@ const layout = {
 
 const validateMessages = {
   required: "${label} requerido!",
-  types: { 
+  types: {
     email: "${label} no es un correo correcto!",
   },
 };
 
-const SForm = ( {data} ) => {
+const SForm = ({ data }) => {
   const onFinish = (values) => {
     console.log(values);
   };
   return (
-    
     <Col span={10} offset={2}>
-      { data.title != "" &&
-        <Title level={3}>
-          {data.title} 
-        </Title>
-      }
-      
+      {data.title !== "" && <Title level={3}>{data.title}</Title>}
+
       <Form
         {...layout}
         name="nest-messages"
