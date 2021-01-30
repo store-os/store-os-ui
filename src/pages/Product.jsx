@@ -13,6 +13,7 @@ import {
   Divider,
   Collapse,
   Badge,
+  Carousel,
 } from "antd";
 import { useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx";
 import SCartNoticiation from "../components/SCartNotification";
@@ -20,7 +21,7 @@ const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
 const Product = () => {
-  const { viewport } = useViewport();
+  let viewport = useViewport();
   console.log("VIEWPORT", viewport);
   if (viewport.device === MOBILE) {
     console.log("MOBILE");
@@ -48,18 +49,43 @@ const Product = () => {
     <Main>
       {data && (
         <Row>
-          <Col span={14}>
-            <Carousel>
-              {data.images.map((image) => (
-                <img
-                  src={image}
-                  alt="Blog entry cover"
-                  onClick={() => setSelectedImage(image)}
-                ></img>
-              ))}
-            </Carousel>
+          <Col md={24} lg={14}>
+            {viewport.device === "DESKTOP" ? (
+              <Gallery>
+                {data.images.map((image) => (
+                  <img
+                    src={image}
+                    alt="Blog entry cover"
+                    style={{
+                      height: 420,
+                    }}
+                  ></img>
+                ))}
+              </Gallery>
+            ) : (
+              <Carousel>
+                {data.images.map((image, i) => (
+                  <div>
+                    <img
+                      style={{
+                        height:
+                          viewport.device === "TABLET"
+                            ? 420
+                            : viewport.device === "MOBILE"
+                            ? 280
+                            : "100%",
+                        width: "100%",
+                        objectFit: 'contain'
+                      }}
+                      src={image}
+                      alt="Carousel product"
+                    />
+                  </div>
+                ))}
+              </Carousel>
+            )}
           </Col>
-          <Col span={10} style={{ textAlign: "left", padding: "2%" }}>
+          <Col md={24} lg={10} style={{ textAlign: "left", padding: "2%" }}>
             <Breadcrumb>
               <Breadcrumb.Item
                 href={"/catalog?category=" + data.levels.category}
@@ -237,7 +263,7 @@ const Description = styled(Paragraph)`
   -webkit-box-orient: vertical;
 `;
 
-const Carousel = styled.div`
+const Gallery = styled.div`
   padding: 0 20%;
   img {
     width: 100%;

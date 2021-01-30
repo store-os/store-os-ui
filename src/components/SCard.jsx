@@ -110,6 +110,7 @@ const MainCard = styled(Card)`
     font-weight: 400;
     text-align: left;
     line-height: initial;
+    white-space: initial;
   }
 
   a.title__link-product {
