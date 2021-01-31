@@ -13,10 +13,9 @@ const SliderSection = () => {
       {slider.length > 0 &&
         slider.map((slide, index) => {
           return (
-            <div>
+            <div key={index}>
               <SliderImage
                 src={slide}
-                key={index}
                 style={{
                   height: viewport.device === DESKTOP ? "80vh" : "40vh",
                 }}

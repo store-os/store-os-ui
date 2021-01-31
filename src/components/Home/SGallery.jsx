@@ -34,8 +34,8 @@ const GallerySection = () => {
             {images.length > 0 &&
               images.map((image, index) => {
                 return (
-                  <figure>
-                    <Image src={image} key={index} />
+                  <figure key={index}>
+                    <Image src={image} />
                   </figure>
                 );
               })}

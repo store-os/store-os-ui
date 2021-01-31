@@ -16,7 +16,7 @@ const style = {
 const SBackTop = () => {
   return (
     <BackTop>
-      <div style={style} visibilityHeight='840'>
+      <div style={style} visibilityheight='840'>
         <ArrowUpOutlined />
       </div>
     </BackTop>

@@ -70,7 +70,7 @@ const ContactSection = () => {
         {channels.length > 0 &&
           channels.map((channel, index) => {
             return (
-              <Col xs={{ span: 12 }} md={{ span: 6 }} align="middle">
+              <Col xs={{ span: 12 }} md={{ span: 6 }} align="middle" key={index}>
                 <Space direction="vertical" align="center">
                   {channel.icon}
                   <Title level={5}>{channel.title}</Title>
