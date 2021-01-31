@@ -51,6 +51,7 @@ const AppFooter = ({ data, maxColumnsPerRow, columns }) => (
 export default AppFooter;
 
 const FooterSection = styled.footer`
+  flex-shrink: 0;
   background-color: #f7f7f7;
 `;
 
@@ -59,6 +60,6 @@ const ColumnsSection = styled.section`
   justify-content: space-around;
   width: 100%;
   max-width: 1200px;
-  padding: 80px 0 20px;
+  padding: 80px 24px 20px;
   margin: auto;
 `;

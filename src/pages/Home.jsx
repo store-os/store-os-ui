@@ -7,8 +7,7 @@ import StatisticsSection from "../components/Home/SStatistics";
 import ContactSection from "../components/Home/SContact";
 import GallerySection from "../components/Home/SGallery";
 
-import {Services} from "../data/Home.jsx"
-
+import { Services } from "../data/Home.jsx";
 
 const Home = () => {
   return (
@@ -28,6 +27,7 @@ const Home = () => {
 const Container = styled.div`
   max-width: 1440px;
   width: 100%;
+  padding: 0 24px;
   margin: 64px auto;
 `;
 

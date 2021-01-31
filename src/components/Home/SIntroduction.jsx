@@ -6,14 +6,16 @@ const IntroductionSection = () => {
   return (
     <Row
       style={{
-        marginRight: -150,
-        marginLeft: -150,
+        marginRight: -24,
+        marginLeft: -24,
         paddingTop: 64,
         paddingBottom: 64,
+        paddingRight: 24,
+        paddingLeft: 24,
         backgroundColor: "lightgrey",
       }}
     >
-      <Col xs={{ span: 12, offset: 1 }} lg={{ span: 12, offset: 6 }}>
+      <Col xs={{ span: 24 }} lg={{ span: 12, offset: 6 }}>
         <Space direction="vertical">
           <Paragraph>Distribuidor oficial Kärcher en Asturias</Paragraph>
           <Title level={3}>

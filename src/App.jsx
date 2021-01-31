@@ -65,15 +65,17 @@ const App = () => {
       <div className="App">
         <Layout>
           <AppHeader data={data} searchClick={toggleVisibility} />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/catalog" component={Catalog} />
-            <Route exact path="/blog" component={Blog} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/contact" component={Contact} />
-            <Route exact path="/product/:productId" component={Product} />
-            <Route exact path="/blog/:blogId" component={OneBlog} />
-          </Switch>
+          <AppMain>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/catalog" component={Catalog} />
+              <Route exact path="/blog" component={Blog} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/contact" component={Contact} />
+              <Route exact path="/product/:productId" component={Product} />
+              <Route exact path="/blog/:blogId" component={OneBlog} />
+            </Switch>
+          </AppMain>
           <AppFooter data={data} maxColumnsPerRow={4} columns={FooterData} />
           <SBackTop />
         </Layout>
@@ -84,7 +86,7 @@ const App = () => {
 };
 
 const AppMain = styled.main`
-  min-height: 80vh;
+  flex: 1 0 auto;
 `;
 
 export default App;

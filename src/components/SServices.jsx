@@ -2,35 +2,28 @@ import React from "react";
 import { Row, Col, Space, Typography } from "antd";
 import styled from "styled-components";
 
-
 const { Title, Paragraph } = Typography;
 
-
-const ServicesSection = ({
-  data
-  } ) => {
+const ServicesSection = ({ data }) => {
   return (
     <React.Fragment>
-      { data.title !== "" && (
-        <Title level={2}>{data.title}</Title>
-      )
-      }
-      
-      <Row>
+      {data.title !== "" && <Title level={2}>{data.title}</Title>}
+
+      <Row gutter={[48, 48]}>
         {data.service.length > 0 &&
           data.service.map((service, index) => {
             return (
-              <Col xs={{ span: 5, offset: 1 }} lg={{ span: 6, offset: 2 }}>
+              <Col xs={{ span: 12 }} lg={{ span: 6 }}>
                 <Space direction="vertical" size="middle">
-                  { service.image !== "" &&
-                  <ServiceImage src={service.image} key={index} />
-                  }
-                  { service.title !== "" && 
-                  <Title level={3}>{service.title}</Title>
-                  }
-                  { service.description !== "" && 
-                  <Paragraph>{service.description}</Paragraph>
-                  }
+                  {service.image !== "" && (
+                    <ServiceImage src={service.image} key={index} />
+                  )}
+                  {service.title !== "" && (
+                    <Title level={3}>{service.title}</Title>
+                  )}
+                  {service.description !== "" && (
+                    <Paragraph>{service.description}</Paragraph>
+                  )}
                 </Space>
               </Col>
             );
@@ -41,7 +34,7 @@ const ServicesSection = ({
 };
 
 const ServiceImage = styled.img`
-  width: 100%
+  width: 100%;
   object-fit: cover;
 `;
 

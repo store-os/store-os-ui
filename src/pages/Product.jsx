@@ -15,21 +15,14 @@ import {
   Badge,
   Carousel,
 } from "antd";
-import { useViewport, MOBILE, TABLET } from "../hooks/useViewPort.jsx";
+import { useViewport } from "../hooks/useViewPort.jsx";
 import SCartNoticiation from "../components/SCartNotification";
+
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
 const Product = () => {
   let viewport = useViewport();
-  console.log("VIEWPORT", viewport);
-  if (viewport.device === MOBILE) {
-    console.log("MOBILE");
-  } else if (viewport.device === TABLET) {
-    console.log("TABLET");
-  } else {
-    console.log("DESKTOP");
-  }
   let { productId } = useParams();
   const [data, setData] = useState();
   const [selectedImage, setSelectedImage] = useState();
@@ -75,7 +68,7 @@ const Product = () => {
                             ? 280
                             : "100%",
                         width: "100%",
-                        objectFit: 'contain'
+                        objectFit: "contain",
                       }}
                       src={image}
                       alt="Carousel product"

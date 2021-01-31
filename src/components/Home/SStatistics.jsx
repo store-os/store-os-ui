@@ -18,6 +18,7 @@ const StatisticsSection = () => {
 
   return (
     <Row
+      gutter={[48, 48]}
       style={{
         paddingTop: 64,
         paddingBottom: 64,
@@ -26,7 +27,7 @@ const StatisticsSection = () => {
       {statistics.length > 0 &&
         statistics.map((statistic, index) => {
           return (
-            <Col xs={{ span: 5, offset: 1 }} lg={{ span: 4, offset: 4 }}>
+            <Col xs={{ span: 8 }}>
               <Space size="middle" align="center">
                 <Statistic title={statistic.title} value={statistic.value} />
               </Space>

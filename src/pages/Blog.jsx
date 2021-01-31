@@ -29,7 +29,7 @@ const Blog = () => {
         </Col>
       </Row>
       <h2 style={{ margin: "20px 12%", fontSize: 32 }}>Blog</h2>
-      <Row style={{ margin: "0 12%" }}>
+      <Row>
         {data &&
           data.posts &&
           data.posts.map((entry) => (

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import SCard from "../components/SCard";
-import { Row, Col, Layout, Collapse, Spin } from "antd";
+import { Button, Row, Col, Layout, Collapse, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import SCategories from "../components/SCategories";
@@ -9,6 +9,7 @@ import SPrice from "../components/SPrice";
 import SSort from "../components/SSort";
 import SAutocomplete from "../components/SAutocomplete";
 import useScrollFilter from "../hooks/useScrollFilter";
+import { useViewport, MOBILE, TABLET, DESKTOP } from "../hooks/useViewPort.jsx";
 
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
@@ -20,6 +21,7 @@ let queryPrice = "",
   querySearch = "";
 
 const Catalog = ({ location }) => {
+  let viewport = useViewport();
   const [fullQuery, setFullQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -100,33 +102,35 @@ const Catalog = ({ location }) => {
   return (
     <React.Fragment>
       {data && (
-        <Layout>
-          <Sider
-            width="20%"
-            theme="light"
-            style={{ padding: "0 12px", marginTop: "40px" }}
-          >
-            <Collapse
-              defaultActiveKey={["1", "2"]}
-              ghost
-              extra={<span>325</span>}
+        <Layout style={{ minHeight: "80vh" }}>
+          {viewport.device === DESKTOP && (
+            <Sider
+              width="20%"
+              theme="light"
+              style={{ padding: "0 12px", marginTop: "40px" }}
             >
-              <Panel header="Categories" key="1">
-                <SCategories
-                  onCategoriesQuery={applyFilterCategories}
-                  data={data}
-                ></SCategories>
-              </Panel>
-              <Panel header="Price" key="2">
-                <SPrice
-                  maxValue={data.aggregations.maxPrice.value}
-                  minValue={data.aggregations.minPrice.value}
-                  range={true}
-                  onPriceQuery={applyFilterPrice}
-                />
-              </Panel>
-            </Collapse>
-          </Sider>
+              <Collapse
+                defaultActiveKey={["1", "2"]}
+                ghost
+                extra={<span>325</span>}
+              >
+                <Panel header="Categories" key="1">
+                  <SCategories
+                    onCategoriesQuery={applyFilterCategories}
+                    data={data}
+                  ></SCategories>
+                </Panel>
+                <Panel header="Price" key="2">
+                  <SPrice
+                    maxValue={data.aggregations.maxPrice.value}
+                    minValue={data.aggregations.minPrice.value}
+                    range={true}
+                    onPriceQuery={applyFilterPrice}
+                  />
+                </Panel>
+              </Collapse>
+            </Sider>
+          )}
 
           <MainContent>
             <Row
