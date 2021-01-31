@@ -13,7 +13,7 @@ const ServicesSection = ({ data }) => {
         {data.service.length > 0 &&
           data.service.map((service, index) => {
             return (
-              <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+              <Col xs={{ span: 12 }} lg={{ span: 8 }}>
                 <Space direction="vertical" size="middle">
                   {service.image !== "" && (
                     <ServiceImage src={service.image} key={index} />

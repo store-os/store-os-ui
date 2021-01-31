@@ -27,7 +27,7 @@ const StatisticsSection = () => {
       {statistics.length > 0 &&
         statistics.map((statistic, index) => {
           return (
-            <Col xs={{ span: 8 }}>
+            <Col xs={{ span: 8 }} align="center">
               <Space size="middle" align="center">
                 <Statistic title={statistic.title} value={statistic.value} />
               </Space>
