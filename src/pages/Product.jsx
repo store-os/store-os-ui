@@ -17,6 +17,7 @@ import {
 } from "antd";
 import { useViewport } from "../hooks/useViewPort.jsx";
 import SCartNoticiation from "../components/SCartNotification";
+import SDrawerForm from "../components/SDrawerForm";
 
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
@@ -141,7 +142,7 @@ const Product = () => {
               </Description>
             )}
 
-            {data.available && (
+            {data.available ? (
               <Button
                 type="primary"
                 block
@@ -156,6 +157,12 @@ const Product = () => {
               >
                 Add to cart
               </Button>
+            ):
+            (
+              <SDrawerForm
+                visibility={false}>
+              </SDrawerForm>
+
             )}
 
             <Divider />
