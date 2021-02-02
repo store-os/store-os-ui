@@ -164,8 +164,8 @@ const Catalog = ({ location }) => {
                 </Button>
                 <Drawer
                   title="Filters"
-                  placement="bottom"
-                  height="100vh"
+                  placement="left"
+                  width="100vw"
                   closable={true}
                   onClose={onClose}
                   visible={visible}
