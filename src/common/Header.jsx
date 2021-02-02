@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Layout, Badge, Menu, Dropdown, Space, Drawer } from "antd";
 import { Link } from "react-router-dom";
 import mainLogo from "../../src/logo.png";
-import { useViewport, MOBILE, TABLET, DESKTOP } from "../hooks/useViewPort.jsx";
+import { useViewport, DESKTOP } from "../hooks/useViewPort.jsx";
+import { CaretDownOutlined } from "@ant-design/icons";
 
 const { Header } = Layout;
 const { SubMenu } = Menu;
@@ -96,13 +97,17 @@ const AppHeader = ({ data, searchClick }) => {
           <React.Fragment>
             <Navigation size="large">
               <Nav to="/">Home</Nav>
-              <Dropdown overlay={<Menu>{menu}</Menu>}>
+              <Dropdown
+                className="ant-dropdown-link"
+                overlay={<Menu>{menu}</Menu>}
+              >
                 <Nav
-                  className="ant-dropdown-link"
                   onClick={(e) => e.preventDefault()}
                   to="/catalog"
+                  style={{ display: "flex", alignItems: "center" }}
                 >
                   Catalog
+                  <CaretDownOutlined style={{ fontSize: 11, marginLeft: 8 }} />
                 </Nav>
               </Dropdown>
               <Nav to="/blog">Blog</Nav>
@@ -168,6 +173,12 @@ const Navigation = styled(Space)`
   flex: 1;
   a {
     color: black;
+  }
+
+  .ant-dropdown-link:hover {
+    span {
+      transform: rotate(180deg);
+    }
   }
 `;
 

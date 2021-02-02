@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import SCard from "../components/SCard";
-import { Button, Row, Col, Layout, Collapse, Spin } from "antd";
+import { Button, Row, Col, Layout, Collapse, Spin, Drawer } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import SCategories from "../components/SCategories";
@@ -24,6 +24,14 @@ const Catalog = ({ location }) => {
   let viewport = useViewport();
   const [fullQuery, setFullQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
+  const [visible, setVisible] = useState(false);
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+  const onClose = () => {
+    setVisible(false);
+  };
 
   const {
     data,
@@ -144,6 +152,65 @@ const Catalog = ({ location }) => {
                 autocomplete={autocomplete}
               />
             </Row>
+            {viewport.device !== DESKTOP && (
+              <Row
+                gutter={[48, 48]}
+                style={{
+                  margin: "8px 0 48px 0",
+                }}
+              >
+                <Button type="primary" onClick={showDrawer}>
+                  Show filters
+                </Button>
+                <Drawer
+                  title="Filters"
+                  placement="bottom"
+                  height="100vh"
+                  closable={true}
+                  onClose={onClose}
+                  visible={visible}
+                  footer={
+                    <div
+                      style={{
+                        textAlign: "right",
+                      }}
+                    >
+                      <Button onClick={onClose} style={{ marginRight: 8 }}>
+                        Cancel
+                      </Button>
+                      <Button onClick={onClose} type="primary">
+                        Apply
+                      </Button>
+                    </div>
+                  }
+                >
+                  {data ? (
+                    <Collapse
+                      defaultActiveKey={["1", "2"]}
+                      ghost
+                      extra={<span>325</span>}
+                    >
+                      <Panel header="Categories" key="1">
+                        <SCategories
+                          onCategoriesQuery={applyFilterCategories}
+                          data={data}
+                        ></SCategories>
+                      </Panel>
+                      <Panel header="Price" key="2">
+                        <SPrice
+                          maxValue={data.aggregations.maxPrice.value}
+                          minValue={data.aggregations.minPrice.value}
+                          range={true}
+                          onPriceQuery={applyFilterPrice}
+                        />
+                      </Panel>
+                    </Collapse>
+                  ) : (
+                    <p> There are no filters for this catalog </p>
+                  )}
+                </Drawer>
+              </Row>
+            )}
             <Row
               gutter={[48, 48]}
               style={{
