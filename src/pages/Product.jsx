@@ -230,6 +230,20 @@ const Product = () => {
                 producto
               </p>
             )}
+
+            <Divider />
+
+            {data.metadata.specs && (
+              <React.Fragment>
+                <div
+                  className="ant-descriptions-title"
+                  style={{ marginBottom: 20 }}
+                >
+                  Productos relacionados
+                </div>
+                <p>Aquí van los productos relacionados</p>
+              </React.Fragment>
+            )}
           </Col>
         </Row>
       )}

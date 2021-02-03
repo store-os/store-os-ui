@@ -51,7 +51,7 @@ const SDrawerForm = ({ data, product_id }) => {
  
 
     return (
-        <Col span={10} offset={2}>
+        <Col span={8} offset={2}>
         <Button type="primary" onClick={showDrawer}>
                 <PlusOutlined /> {data.button_name}
         </Button>
