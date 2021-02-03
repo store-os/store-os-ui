@@ -18,6 +18,8 @@ import {
 import { useViewport } from "../hooks/useViewPort.jsx";
 import SCartNoticiation from "../components/SCartNotification";
 import SDrawerForm from "../components/SDrawerForm";
+import {dataMoreInfo} from "../data/MoreInfo.jsx"
+
 
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
@@ -159,10 +161,7 @@ const Product = () => {
               </Button>
             ):
             (
-              <SDrawerForm
-                visibility={false}>
-              </SDrawerForm>
-
+              <SDrawerForm data={dataMoreInfo} product_id={data.id}/>
             )}
 
             <Divider />

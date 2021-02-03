@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SCartNoticiation from "../components/SCartNotification";
+import SDrawerForm from "../components/SDrawerForm";
+import {dataMoreInfo} from "../data/MoreInfo.jsx"
 
 const { Meta } = Card;
 
@@ -84,7 +86,7 @@ const SCard = ({
             <p>{price}€</p>
           )}
 
-          {available && (
+          {available? (
             <Button
               type="primary"
               shape="round"
@@ -100,6 +102,8 @@ const SCard = ({
             >
               Add to cart
             </Button>
+          ):(
+            <SDrawerForm data={dataMoreInfo} product_id={productId}/>
           )}
         </Actions>
       </MainCard>

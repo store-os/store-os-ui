@@ -1,32 +1,65 @@
 import React, { useState } from "react";
 import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import FormSection from "../components/Contact/SForm.jsx";
-import {dataForm} from "../data/Contact.jsx" 
+import axios from 'axios'
 
 const { Option } = Select;
 
-const SDrawerForm = () => {
-  const [visible, setVisible] = useState(false);
+const validateMessages = {
+  required: "${label} requerido!",
+  types: {
+    email: "${label} no es un correo correcto!",
+  },
+};
+
+const SDrawerForm = ({ data, product_id }) => {
+  const [status, setStatus] = useState({ visible: false,
+    info: { error: false, msg: null }
+  });
 
   const showDrawer = () => {
-    setVisible(true);
+    setStatus({visible: true});
   };
 
   const onClose = () => {
-    setVisible(false);
+    setStatus({visible: false});
   };
+
+  const onFinish = (values) => {
+    console.log(values);
+    axios({
+      method: 'POST',
+      url: data.formspree,
+      data: values
+    })
+      .then(response => {
+        setStatus({
+          info: { error: false, msg: data.success }
+        })
+        
+      })
+      .catch(error => {
+        setStatus({
+         
+          info: { error: true, msg: error.response.data.error }
+        })
+        
+        
+      })
+  };
+
+ 
 
     return (
         <Col span={10} offset={2}>
         <Button type="primary" onClick={showDrawer}>
-                <PlusOutlined /> New account
+                <PlusOutlined /> {data.button_name}
         </Button>
             <Drawer
-                title="Create a new account"
-                width={720}
+                title={data.title}
+                width={data.title_width}
                 onClose={onClose}
-                visible={visible}
+                visible={status.visible}
                 bodyStyle={{ paddingBottom: 80 }}
                 footer={
                     <div
@@ -35,36 +68,44 @@ const SDrawerForm = () => {
                         }}
                     >
                         <Button onClick={onClose} style={{ marginRight: 8 }}>
-                            Cancel
+                          {data.button_cancel}
               </Button>
                         <Button onClick={onClose} type="primary">
-                            Submit
+                          {data.button_accept}
               </Button>
                     </div>
                 }
             >
-                <Form layout="vertical" hideRequiredMark>
+            <Form layout="vertical" hideRequiredMark
+            name="nest-messages"
+            onFinish={onFinish}
+            validateMessages={validateMessages}
+            style={{ width: "100%" }}>
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
-                  name="name"
-                  label="Name"
-                  rules={[{ required: true, message: 'Please enter user name' }]}
+                  name={["user", "name"]}
+                  label={data.name.label}
+                  rules={[{ required: true, message: data.name.placeholder}]}
                 >
-                  <Input placeholder="Please enter user name" />
+                  <Input placeholder={data.name.placeholder} />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="url"
-                  label="Url"
-                  rules={[{ required: true, message: 'Please enter url' }]}
+                  name={["user", "email"]}
+                  label={data.email.label}
+                  rules={[
+                    {
+                      type: "email",
+                      required: true,
+                      message: data.email.placeholder
+                    },
+                  ]}
                 >
                   <Input
                     style={{ width: '100%' }}
-                    addonBefore="http://"
-                    addonAfter=".com"
-                    placeholder="Please enter url"
+                    placeholder={data.email.label}
                   />
                 </Form.Item>
               </Col>
@@ -72,68 +113,43 @@ const SDrawerForm = () => {
             <Row gutter={16}>
               <Col span={12}>
                 <Form.Item
-                  name="owner"
-                  label="Owner"
-                  rules={[{ required: true, message: 'Please select an owner' }]}
+                  name={["user", "product_ID"]}
+                  label={data.product.label}
                 >
-                  <Select placeholder="Please select an owner">
-                    <Option value="xiao">Xiaoxiao Fu</Option>
-                    <Option value="mao">Maomao Zhou</Option>
-                  </Select>
+                  <Input
+                    style={{ width: '100%' }}
+                    placeholder={product_id}
+                    disabled={true}
+                    value={product_id}
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
-                  name="type"
-                  label="Type"
+                  name={["user", "question_type"]}
+                  label={data.question_type.label}
                   rules={[{ required: true, message: 'Please choose the type' }]}
                 >
-                  <Select placeholder="Please choose the type">
-                    <Option value="private">Private</Option>
-                    <Option value="public">Public</Option>
+                  <Select placeholder={data.question_type.placeholder}>
+                    <Option value={data.question_type.option1}>{data.question_type.option1}</Option>
+                    <Option value={data.question_type.option2}>{data.question_type.option2}</Option>
                   </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="approver"
-                  label="Approver"
-                  rules={[{ required: true, message: 'Please choose the approver' }]}
-                >
-                  <Select placeholder="Please choose the approver">
-                    <Option value="jack">Jack Ma</Option>
-                    <Option value="tom">Tom Liu</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="dateTime"
-                  label="DateTime"
-                  rules={[{ required: true, message: 'Please choose the dateTime' }]}
-                >
-                  <DatePicker.RangePicker
-                    style={{ width: '100%' }}
-                    getPopupContainer={trigger => trigger.parentElement}
-                  />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={16}>
               <Col span={24}>
                 <Form.Item
-                  name="description"
-                  label="Description"
+                  name={["user", "comentario"]}
+                  label={data.comentario.label}
                   rules={[
                     {
                       required: true,
-                      message: 'please enter url description',
+                      message: data.comentario.placeholder,
                     },
                   ]}
                 >
-                  <Input.TextArea rows={4} placeholder="please enter url description" />
+                  <Input.TextArea rows={4} placeholder={data.comentario.placeholder} />
                 </Form.Item>
               </Col>
             </Row>
