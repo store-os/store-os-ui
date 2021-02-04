@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import SCartNoticiation from "../components/SCartNotification";
 import SDrawerForm from "../components/SDrawerForm";
-import {dataMoreInfo} from "../data/MoreInfo.jsx"
+import { dataMoreInfo } from "../data/MoreInfo.jsx";
 
 const { Meta } = Card;
 
@@ -83,10 +83,9 @@ const SCard = ({
           ) : (
             <p>{price}€</p>
           )}
-          {available? (
+          {available ? (
             <Button
               type="primary"
-              shape="round"
               size="middle"
               className="snipcart-add-item"
               data-item-id={productId}
@@ -99,9 +98,12 @@ const SCard = ({
             >
               Add to cart
             </Button>
-          ):(
-            <SDrawerForm data={dataMoreInfo} product_id={productId}/>
-          
+          ) : (
+            <SDrawerForm
+              data={dataMoreInfo}
+              product_id={productId}
+              triggerType="secondary"
+            />
           )}
         </Actions>
       </MainCard>

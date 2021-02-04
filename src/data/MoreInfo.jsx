@@ -2,7 +2,7 @@
 //Form
 
 export const dataMoreInfo = {
-  "button_name": "Mas info",
+  "button_name": "Más info",
   "title": "Rellene el formulario",
   "title_width": 720,
   "button_cancel": "Cancelar",
