@@ -35,7 +35,7 @@ const Product = () => {
         `${process.env.REACT_APP_PRODUCTS_URL}/${productId}`
       );
       setData(result.data);
-      setSelectedImage(result.data.images[0]);
+      setSelectedImage(result.data.product.images[0]);
     };
 
     fetchData();
@@ -48,7 +48,7 @@ const Product = () => {
           <Col md={24} lg={14}>
             {viewport.device === "DESKTOP" ? (
               <Gallery>
-                {data.images.map((image) => (
+                {data.product.images.map((image) => (
                   <img
                     src={image}
                     alt="Blog entry cover"
@@ -60,7 +60,7 @@ const Product = () => {
               </Gallery>
             ) : (
               <Carousel>
-                {data.images.map((image, i) => (
+                {data.product.images.map((image, i) => (
                   <div>
                     <img
                       style={{
@@ -84,41 +84,41 @@ const Product = () => {
           <Col md={24} lg={10} style={{ textAlign: "left", padding: "2%" }}>
             <Breadcrumb>
               <Breadcrumb.Item
-                href={"/catalog?category=" + data.levels.category}
+                href={"/catalog?category=" + data.product.levels.category}
               >
-                {data.levels.category}
+                {data.product.levels.category}
               </Breadcrumb.Item>
               <Breadcrumb.Item
                 href={
                   "/catalog?category=" +
-                  data.levels.category +
+                  data.product.levels.category +
                   "&subcategory=" +
-                  data.levels.subcategory
+                  data.product.levels.subcategory
                 }
               >
-                {data.levels.subcategory}
+                {data.product.levels.subcategory}
               </Breadcrumb.Item>
               <Breadcrumb.Item
                 href={
                   "/catalog?category=" +
-                  data.levels.category +
+                  data.product.levels.category +
                   "&subcategory=" +
-                  data.levels.subcategory +
+                  data.product.levels.subcategory +
                   "&subsubcategory=" +
-                  data.levels.subsubcategory
+                  data.product.levels.subsubcategory
                 }
               >
-                {data.levels.subsubcategory}
+                {data.product.levels.subsubcategory}
               </Breadcrumb.Item>
             </Breadcrumb>
             <Title level={1} style={{ marginTop: "2%" }}>
-              {data.title}
+              {data.product.title}
             </Title>
-            <p>Product id: {data.id}</p>
+            <p>Product id: {data.product.id}</p>
             <ValueContainer>
-              {data.discount ? (
+              {data.product.discount ? (
                 <React.Fragment>
-                  <Price>{data.final_price}€</Price>
+                  <Price>{data.product.final_price}€</Price>
                   <Price
                     style={{
                       textDecoration: "line-through",
@@ -126,17 +126,17 @@ const Product = () => {
                       color: "#b9b9b9",
                     }}
                   >
-                    {data.price}€
+                    {data.product.price}€
                   </Price>
                 </React.Fragment>
               ) : (
-                <Price>{data.price}€</Price>
+                <Price>{data.product.price}€</Price>
               )}
-              {data.rating && <Rating></Rating>}
+              {data.product.rating && <Rating></Rating>}
             </ValueContainer>
-            {(data.description && (
+            {(data.product.description && (
               <Description style={{ marginBottom: "4%" }}>
-                {data.description}
+                {data.product.description}
               </Description>
             )) || (
               <Description style={{ marginBottom: "4%" }}>
@@ -144,24 +144,24 @@ const Product = () => {
               </Description>
             )}
 
-            {data.available ? (
+            {data.product.available ? (
               <Button
                 type="primary"
                 block
                 className="snipcart-add-item"
-                data-item-id={data.id}
-                data-item-price={data.price}
-                data-item-url={data.url}
-                data-item-description={data.shortDescription}
-                data-item-image={data.images[0]}
-                data-item-name={data.title}
-                onClick={() => SCartNoticiation(data.title)}
+                data-item-id={data.product.id}
+                data-item-price={data.product.price}
+                data-item-url={data.product.url}
+                data-item-description={data.product.shortDescription}
+                data-item-image={data.product.images[0]}
+                data-item-name={data.product.title}
+                onClick={() => SCartNoticiation(data.product.title)}
               >
                 Add to cart
               </Button>
             ):
             (
-              <SDrawerForm data={dataMoreInfo} product_id={data.id}/>
+              <SDrawerForm data={dataMoreInfo} product_id={data.product.id}/>
             )}
 
             <Divider />
@@ -173,9 +173,9 @@ const Product = () => {
               Características
             </div>
 
-            {data.metadata.features ? (
+            {data.product.metadata.features ? (
               <Collapse>
-                {data.metadata.features.map((feature, i) => (
+                {data.product.metadata.features.map((feature, i) => (
                   <Panel header={feature.title} key={i}>
                     {feature.description}
                   </Panel>
@@ -196,8 +196,8 @@ const Product = () => {
               Equipamiento
             </div>
 
-            {data.metadata.equipment ? (
-              data.metadata.equipment.map((equipment) => (
+            {data.product.metadata.equipment ? (
+              data.product.metadata.equipment.map((equipment) => (
                 <Badge
                   color={"volcano"}
                   text={equipment}
@@ -210,14 +210,14 @@ const Product = () => {
 
             <Divider />
 
-            {data.metadata.specs ? (
+            {data.product.metadata.specs ? (
               <Descriptions
                 bordered
                 title="Especificaciones"
                 layout="vertical"
                 size={"small"}
               >
-                {data.metadata.specs.map((spec) => (
+                {data.product.metadata.specs.map((spec) => (
                   <Descriptions.Item label={spec.spec}>
                     {spec.value}
                     {spec.measure}
@@ -233,7 +233,7 @@ const Product = () => {
 
             <Divider />
 
-            {data.metadata.specs && (
+            {data.product.metadata.specs && (
               <React.Fragment>
                 <div
                   className="ant-descriptions-title"
