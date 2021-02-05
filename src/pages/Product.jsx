@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+
+import SCard from "../components/SCard";
 import axios from "axios";
 import {
   Row,
@@ -233,7 +236,7 @@ const Product = () => {
 
             <Divider />
 
-            {data.product.metadata.specs && (
+            {data.relatedProducts.products && (
               <React.Fragment>
                 <div
                   className="ant-descriptions-title"
@@ -241,7 +244,53 @@ const Product = () => {
                 >
                   Productos relacionados
                 </div>
-                <p>Aquí van los productos relacionados</p>
+
+                <Row gutter={[24, 24]}>
+                  <TransitionGroupCatalog>
+                    {data.relatedProducts.products.map((item, index) => (
+                      <CSSTransitionCatalog
+                      classNames="fade"
+                      timeout={420}
+                      key={index}
+                    >
+                        {data.relatedProducts.products.length === index + 1 ? (
+                          <Col key={item.id} xs={24} sm={12} xl={12} xxl={12}>
+                            <div>
+                              <SCard
+                                title={item.title}
+                                brand=""
+                                hoverable={true}
+                                price={item.price}
+                                url={item.url}
+                                discount={item.final_price}
+                                cover={item.images}
+                                available={item.available}
+                                details={`Ref. ${item.id}`}
+                                productId={item.id}
+                              ></SCard>
+                            </div>
+                          </Col>
+                        ) : (
+                          <Col key={item.id} xs={24} sm={12} xl={12} xxl={12}>
+                            <SCard
+                              title={item.title}
+                              brand=""
+                              hoverable={true}
+                              price={item.price}
+                              url={item.url}
+                              discount={item.final_price}
+                              cover={item.images}
+                              available={item.available}
+                              details={`Ref. ${item.id}`}
+                              productId={item.id}
+                            ></SCard>
+                          </Col>
+                        )}
+                      </CSSTransitionCatalog>
+                    ))}
+                  </TransitionGroupCatalog>
+                </Row>
+
               </React.Fragment>
             )}
           </Col>
@@ -283,6 +332,40 @@ const Gallery = styled.div`
     height: 360px;
     object-fit: contain;
     margin-bottom: 48px;
+  }
+`;
+
+
+
+const TransitionGroupCatalog = styled(TransitionGroup)`
+  display: flex;
+  flex-flow: row wrap;
+`;
+
+const CSSTransitionCatalog = styled(CSSTransition)`
+  .fade-enter {
+    opacity: 0;
+  }
+  .fade-enter-active {
+    opacity: 1;
+    transition: opacity 480s ease-in;
+  }
+  .fade-exit {
+    opacity: 1;
+  }
+  .fade-exit-active {
+    opacity: 0.2;
+    transition: opacity 120ms ease-out;
+  }
+  .fade-exit-done {
+    opacity: 0;
+  }
+  .fade-appear {
+    opacity: 0;
+  }
+  .fade-appear-active {
+    opacity: 1;
+    transition: opacity 480s ease;
   }
 `;
 

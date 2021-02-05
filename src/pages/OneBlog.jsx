@@ -188,22 +188,12 @@ const OneBlog = () => {
 
 const Main = styled.main`
   margin-bottom: 80px;
-  max-width: ${(props) =>
-    props.viewport.device === MOBILE
-      ? "768px"
-      : props.viewport.device === TABLET
-      ? "992px"
-      : "1400px"};
+  max-width: 1400px;
 `;
 
 const BlogCarousel = styled.img`
   width: 100%;
-  height: ${(props) =>
-    props.viewport.device === MOBILE
-      ? "150px"
-      : props.viewport.device === TABLET
-      ? "35px"
-      : "300px"};
+  height: 300px;
   object-fit: cover;
   object-position: top;
 `;
