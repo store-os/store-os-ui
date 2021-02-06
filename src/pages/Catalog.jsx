@@ -22,7 +22,7 @@ let queryPrice = "",
 
 const Catalog = ({ location }) => {
   let viewport = useViewport();
-  const [fullQuery, setFullQuery] = useState(location.search);
+  const [fullQuery, setFullQuery] = useState(location.search.split("?") && location.search.split("?").length > 1 ? location.search.split("?")[1] : "" );
   const [pageNumber, setPageNumber] = useState(1);
   const [visible, setVisible] = useState(false);
   
