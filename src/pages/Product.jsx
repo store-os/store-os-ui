@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import SCard from "../components/SCard";
 import axios from "axios";
@@ -21,8 +20,7 @@ import {
 import { useViewport } from "../hooks/useViewPort.jsx";
 import SCartNoticiation from "../components/SCartNotification";
 import SDrawerForm from "../components/SDrawerForm";
-import {dataMoreInfo} from "../data/MoreInfo.jsx"
-
+import { dataMoreInfo } from "../data/MoreInfo.jsx";
 
 const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
@@ -162,9 +160,8 @@ const Product = () => {
               >
                 Add to cart
               </Button>
-            ):
-            (
-              <SDrawerForm data={dataMoreInfo} product_id={data.product.id}/>
+            ) : (
+              <SDrawerForm data={dataMoreInfo} product_id={data.product.id} />
             )}
 
             <Divider />
@@ -246,51 +243,40 @@ const Product = () => {
                 </div>
 
                 <Row gutter={[24, 24]}>
-                  <TransitionGroupCatalog>
-                    {data.relatedProducts.products.map((item, index) => (
-                      <CSSTransitionCatalog
-                      classNames="fade"
-                      timeout={420}
-                      key={index}
-                    >
-                        {data.relatedProducts.products.length === index + 1 ? (
-                          <Col key={item.id} xs={24} sm={12} xl={12} xxl={12}>
-                            <div>
-                              <SCard
-                                title={item.title}
-                                brand=""
-                                hoverable={true}
-                                price={item.price}
-                                url={item.url}
-                                discount={item.final_price}
-                                cover={item.images}
-                                available={item.available}
-                                details={`Ref. ${item.id}`}
-                                productId={item.id}
-                              ></SCard>
-                            </div>
-                          </Col>
-                        ) : (
-                          <Col key={item.id} xs={24} sm={12} xl={12} xxl={12}>
-                            <SCard
-                              title={item.title}
-                              brand=""
-                              hoverable={true}
-                              price={item.price}
-                              url={item.url}
-                              discount={item.final_price}
-                              cover={item.images}
-                              available={item.available}
-                              details={`Ref. ${item.id}`}
-                              productId={item.id}
-                            ></SCard>
-                          </Col>
-                        )}
-                      </CSSTransitionCatalog>
-                    ))}
-                  </TransitionGroupCatalog>
+                  {data.relatedProducts.products.map((item, index) =>
+                    data.relatedProducts.products.length === index + 1 ? (
+                      <Col key={item.id} xs={24} sm={12} xl={12} xxl={12}>
+                        <div>
+                          <SCard
+                            title={item.title}
+                            brand=""
+                            price={item.price}
+                            url={item.url}
+                            discount={item.final_price}
+                            cover={item.images}
+                            available={item.available}
+                            details={`Ref. ${item.id}`}
+                            productId={item.id}
+                          ></SCard>
+                        </div>
+                      </Col>
+                    ) : (
+                      <Col key={item.id} xs={24} sm={12} xl={12} xxl={12}>
+                        <SCard
+                          title={item.title}
+                          brand=""
+                          price={item.price}
+                          url={item.url}
+                          discount={item.final_price}
+                          cover={item.images}
+                          available={item.available}
+                          details={`Ref. ${item.id}`}
+                          productId={item.id}
+                        ></SCard>
+                      </Col>
+                    )
+                  )}
                 </Row>
-
               </React.Fragment>
             )}
           </Col>
@@ -334,59 +320,5 @@ const Gallery = styled.div`
     margin-bottom: 48px;
   }
 `;
-
-
-
-const TransitionGroupCatalog = styled(TransitionGroup)`
-  display: flex;
-  flex-flow: row wrap;
-`;
-
-const CSSTransitionCatalog = styled(CSSTransition)`
-  .fade-enter {
-    opacity: 0;
-  }
-  .fade-enter-active {
-    opacity: 1;
-    transition: opacity 480s ease-in;
-  }
-  .fade-exit {
-    opacity: 1;
-  }
-  .fade-exit-active {
-    opacity: 0.2;
-    transition: opacity 120ms ease-out;
-  }
-  .fade-exit-done {
-    opacity: 0;
-  }
-  .fade-appear {
-    opacity: 0;
-  }
-  .fade-appear-active {
-    opacity: 1;
-    transition: opacity 480s ease;
-  }
-`;
-
-/* const ProductCarousel = styled(Carousel)`
-  &.ant-carousel .slick-slider {
-    display: flex;
-    justify-content: center;
-  }
-  .slick-list {
-    width: 800px;
-  }
-  .slick-dots li {
-    width: 240px;
-    height: 240px;
-    background-color: red;
-    margin-bottom: 40px;
-  }
-  .slick-dots li button {
-    width: 100%;
-    height: 100%;
-  }
-`; */
 
 export default Product;

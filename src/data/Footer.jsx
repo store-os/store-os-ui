@@ -34,13 +34,13 @@ export const FooterData = [
     items: [
       {
         title: "Gama Profesional",
-        url: "https://www.instagram.com/karcher_alchersan/",
-        openExternal: true,
+        url: "/catalog?category=Professional",
+        openExternal: false,
       },
       {
         title: "Gama Home Garden",
-        url: "https://www.linkedin.com/company/alchersan",
-        openExternal: true,
+        url: "/catalog?category=Home Garden",
+        openExternal: false,
       },
       {
         title: "Nuestros blogs",
