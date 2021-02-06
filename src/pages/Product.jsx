@@ -30,6 +30,7 @@ const Product = () => {
   let { productId } = useParams();
   const [data, setData] = useState();
   const [selectedImage, setSelectedImage] = useState();
+
   useEffect(async () => {
     const fetchData = async () => {
       const result = await axios(
@@ -38,9 +39,9 @@ const Product = () => {
       setData(result.data);
       setSelectedImage(result.data.product.images[0]);
     };
-
     fetchData();
-  }, []);
+    window.scrollTo(0, 0);
+  }, [productId]);
 
   return (
     <Main>
@@ -255,7 +256,6 @@ const Product = () => {
                             discount={item.final_price}
                             cover={item.images}
                             available={item.available}
-                            details={`Ref. ${item.id}`}
                             productId={item.id}
                           ></SCard>
                         </div>
@@ -270,7 +270,6 @@ const Product = () => {
                           discount={item.final_price}
                           cover={item.images}
                           available={item.available}
-                          details={`Ref. ${item.id}`}
                           productId={item.id}
                         ></SCard>
                       </Col>

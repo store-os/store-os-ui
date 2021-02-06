@@ -43,7 +43,13 @@ const SCard = ({
         discount={discount}
         hoverable={hoverable}
         cover={
-          <Link to={`product/${productId}`}>
+          <Link
+            to={
+              window.location.href.includes("product")
+                ? `${productId}`
+                : `product/${productId}`
+            }
+          >
             <Thumbnail
               alt="example"
               src={
@@ -69,7 +75,14 @@ const SCard = ({
         bodyStyle={cardContentStyles}
       >
         <Brand>{brand}</Brand>
-        <Link className="title__link-product" to={`product/${productId}`}>
+        <Link
+          className="title__link-product"
+          to={
+            window.location.href.includes("product")
+              ? `${productId}`
+              : `product/${productId}`
+          }
+        >
           <Meta title={title} description={shortDescription} />
         </Link>
 
