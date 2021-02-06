@@ -6,51 +6,52 @@ import {
   EnvironmentOutlined,
   MailOutlined,
 } from "@ant-design/icons";
+import {ContactData} from "../../data/Home.jsx";
 
 const { Title, Paragraph } = Typography;
 
-const ContactSection = () => {
+const ContactSection = ({ data }) => {
   const channels = [
     {
-      title: "Horario",
-      description: "De Luness a Viernes 9:30 - 13:30 15:30 - 19:30",
+      title: data.title_horario,
+      description: data.description_horario,
       icon: (
         <ClockCircleOutlined
           style={{
-            fontSize: 40,
+            fontSize: data.fontSize_icon,
           }}
         />
       ),
     },
     {
-      title: "¡Llámanos!",
-      description: "Polígono Les Peñes Parcela 40F, 33199, Granda, Siero",
+      title: data.title_telefono,
+      description: data.description_telefono,
       icon: (
         <PhoneOutlined
           style={{
-            fontSize: 40,
+            fontSize: data.fontSize_icon,
           }}
         />
       ),
     },
     {
-      title: "¡Encuéntranos!",
-      description: "985 79 30 27",
+      title: data.title_ubicacion,
+      description: data.description_ubicacion,
       icon: (
         <EnvironmentOutlined
           style={{
-            fontSize: 40,
+            fontSize: data.fontSize_icon,
           }}
         />
       ),
     },
     {
-      title: "¡Consúltanos!",
-      description: "consultas@alchersan.com",
+      title: data.title_email,
+      description: data.description_email,
       icon: (
         <MailOutlined
           style={{
-            fontSize: 40,
+            fontSize: data.fontSize_icon,
           }}
         />
       ),

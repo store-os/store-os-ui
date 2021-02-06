@@ -7,7 +7,7 @@ import StatisticsSection from "../components/Home/SStatistics";
 import ContactSection from "../components/Home/SContact";
 import GallerySection from "../components/Home/SGallery";
 
-import { Services } from "../data/Home.jsx";
+import { Services, ContactData, Description } from "../data/Home.jsx";
 
 const Home = () => {
   return (
@@ -15,9 +15,9 @@ const Home = () => {
       <SliderSection />
       <Container>
         <ServicesSection data={Services} />
-        <IntroductionSection />
+        <IntroductionSection data={Description} />
         <StatisticsSection />
-        <ContactSection />
+        <ContactSection data={ContactData} />
         <GallerySection />
       </Container>
     </React.Fragment>
