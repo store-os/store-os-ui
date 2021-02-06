@@ -22,10 +22,10 @@ let queryPrice = "",
 
 const Catalog = ({ location }) => {
   let viewport = useViewport();
-  const [fullQuery, setFullQuery] = useState("");
+  const [fullQuery, setFullQuery] = useState(location.search);
   const [pageNumber, setPageNumber] = useState(1);
   const [visible, setVisible] = useState(false);
-
+  
   const showDrawer = () => {
     setVisible(true);
   };
