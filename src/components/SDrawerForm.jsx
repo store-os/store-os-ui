@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Drawer, Form, Button, Col, Row, Input, Select } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useViewport, DESKTOP } from "../hooks/useViewPort.jsx";
+
 
 const { Option } = Select;
 
@@ -21,6 +23,8 @@ const SDrawerForm = ({
     visible: false,
     info: { error: false, msg: null },
   });
+
+  let viewport = useViewport();
 
   const showDrawer = () => {
     setStatus({ visible: true });
@@ -56,7 +60,11 @@ const SDrawerForm = ({
       </Button>
       <Drawer
         title={data.title}
-        width={data.title_width}
+        width={viewport.device === "TABLET"
+        ? "80%"
+        : viewport.device === "MOBILE"
+        ? "100%"
+        : "50%"}
         onClose={onClose}
         visible={status.visible}
         bodyStyle={{ paddingBottom: 80 }}
@@ -81,7 +89,9 @@ const SDrawerForm = ({
           name="nest-messages"
           onFinish={onFinish}
           validateMessages={validateMessages}
-          style={{ width: "100%" }}
+          style={{ 
+            width: "100%"
+           }}
         >
           <Row gutter={16}>
             <Col span={12}>
@@ -106,7 +116,7 @@ const SDrawerForm = ({
                 ]}
               >
                 <Input
-                  style={{ width: "100%" }}
+                  style={{ width: "100%"}}
                   placeholder={data.email.label}
                 />
               </Form.Item>

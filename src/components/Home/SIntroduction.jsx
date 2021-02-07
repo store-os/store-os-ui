@@ -37,7 +37,6 @@ const IntroductionSection = ({data}) => {
        })}
     </Row>
   );
- 
 };
 
 export default IntroductionSection;
